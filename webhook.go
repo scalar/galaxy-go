@@ -10,9 +10,9 @@ import (
 
 	standardwebhooks "github.com/standard-webhooks/standard-webhooks/libraries/go"
 
-	"scalar-galaxy/internal/apijson"
-	"scalar-galaxy/internal/requestconfig"
-	"scalar-galaxy/option"
+	"github.com/scalar/galaxy-go/internal/apijson"
+	"github.com/scalar/galaxy-go/internal/requestconfig"
+	"github.com/scalar/galaxy-go/option"
 )
 
 // WebhookService contains methods that help with parsing and verifying inbound

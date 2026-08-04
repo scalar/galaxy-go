@@ -173,12 +173,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllData = await client.planets.listAllData({\n  limit: 10,\n  offset: 0,\n});\nconsole.log(listAllData);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst listAllData = await client.planets.listAllData({\n  limit: 10,\n  offset: 0,\n});\nconsole.log(listAllData);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.list_all_data(\n    limit=10,\n    offset=0,\n)\nprint(planet)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.list_all_data(\n    limit=10,\n    offset=0,\n)\nprint(planet)"
           },
           {
             "lang": "Go",
@@ -319,12 +319,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.create();\nconsole.log(planet);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.create();\nconsole.log(planet);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.create(\n    name=\"Mars\",\n)\nprint(planet)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.create(\n    name=\"Mars\",\n)\nprint(planet)"
           },
           {
             "lang": "Go",
@@ -387,12 +387,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.retrieve(1);\nconsole.log(planet);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.retrieve(1);\nconsole.log(planet);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.retrieve(\n    planet_id=1,\n)\nprint(planet)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.retrieve(\n    planet_id=1,\n)\nprint(planet)"
           },
           {
             "lang": "Go",
@@ -459,12 +459,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.update(1);\nconsole.log(planet);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst planet = await client.planets.update(1);\nconsole.log(planet);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.update(\n    planet_id=1,\n    name=\"Mars\",\n)\nprint(planet)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.update(\n    planet_id=1,\n    name=\"Mars\",\n)\nprint(planet)"
           },
           {
             "lang": "Go",
@@ -499,12 +499,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.planets.delete(1);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nawait client.planets.delete(1);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nclient.planets.delete(\n    planet_id=1,\n)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nclient.planets.delete(\n    planet_id=1,\n)"
           },
           {
             "lang": "Go",
@@ -567,12 +567,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uploadImage = await client.planets.uploadImage(1);\nconsole.log(uploadImage);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst uploadImage = await client.planets.uploadImage(1);\nconsole.log(uploadImage);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.upload_image(\n    planet_id=1,\n)\nprint(planet)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nplanet = client.planets.upload_image(\n    planet_id=1,\n)\nprint(planet)"
           },
           {
             "lang": "Go",
@@ -618,12 +618,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst celestialBody = await client.celestialBodies.create({\n  name: \"Mars\",\n});\nconsole.log(celestialBody);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst celestialBody = await client.celestialBodies.create({\n  name: \"Mars\",\n});\nconsole.log(celestialBody);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ncelestial_body = client.celestial_bodies.create(\n    name=\"Mars\",\n)\nprint(celestial_body)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\ncelestial_body = client.celestial_bodies.create(\n    name=\"Mars\",\n)\nprint(celestial_body)"
           },
           {
             "lang": "Go",
@@ -765,12 +765,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.createUser();\nconsole.log(user);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.createUser();\nconsole.log(user);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.create_user(\n    name=\"Marc\",\n    email=\"marc@scalar.com\",\n    password=\"i-love-scalar\",\n)\nprint(authentication)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.create_user(\n    name=\"Marc\",\n    email=\"marc@scalar.com\",\n    password=\"i-love-scalar\",\n)\nprint(authentication)"
           },
           {
             "lang": "Go",
@@ -852,12 +852,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createToken = await client.authentication.createToken();\nconsole.log(createToken);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst createToken = await client.authentication.createToken();\nconsole.log(createToken);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.create_token(\n    email=\"marc@scalar.com\",\n    password=\"i-love-scalar\",\n)\nprint(authentication)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.create_token(\n    email=\"marc@scalar.com\",\n    password=\"i-love-scalar\",\n)\nprint(authentication)"
           },
           {
             "lang": "Go",
@@ -940,12 +940,12 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import ScalarGalaxy from \"@scalar/galaxy\";\n\nconst client = new ScalarGalaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.listMe();\nconsole.log(user);"
+            "source": "import Galaxy from \"@scalar/galaxy\";\n\nconst client = new Galaxy({\n  bearerAuth: process.env[\"BEARER_AUTH\"], // defaults to the BEARER_AUTH env var\n  environment: \"production\",\n});\n\nconst user = await client.authentication.listMe();\nconsole.log(user);"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import os\n\nfrom scalar_galaxy import ScalarGalaxy\n\nclient = ScalarGalaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.list_me()\nprint(authentication)"
+            "source": "import os\n\nfrom scalar_galaxy import Galaxy\n\nclient = Galaxy(\n    bearer_auth=os.environ.get(\"BEARER_AUTH\"),\n)\n\nauthentication = client.authentication.list_me()\nprint(authentication)"
           },
           {
             "lang": "Go",

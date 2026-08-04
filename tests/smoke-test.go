@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	sdk "scalar-galaxy"
-	"scalar-galaxy/option"
+	sdk "github.com/scalar/galaxy-go"
+	"github.com/scalar/galaxy-go/option"
 )
 
 // Smoke test: calls every generated operation once to confirm the SDK can reach each endpoint.

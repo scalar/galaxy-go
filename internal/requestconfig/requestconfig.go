@@ -18,11 +18,11 @@ import (
 	"strings"
 	"time"
 
-	"scalar-galaxy/internal"
-	"scalar-galaxy/internal/apierror"
-	"scalar-galaxy/internal/apiform"
-	"scalar-galaxy/internal/apiquery"
-	"scalar-galaxy/internal/param"
+	"github.com/scalar/galaxy-go/internal"
+	"github.com/scalar/galaxy-go/internal/apierror"
+	"github.com/scalar/galaxy-go/internal/apiform"
+	"github.com/scalar/galaxy-go/internal/apiquery"
+	"github.com/scalar/galaxy-go/internal/param"
 )
 
 func getDefaultHeaders() map[string]string {

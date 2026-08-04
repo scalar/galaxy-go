@@ -25,7 +25,7 @@ import (
 	"context"
 	"fmt"
 
-	sdk "scalar-galaxy"
+	sdk "github.com/scalar/galaxy-go"
 )
 
 client := sdk.NewClient()

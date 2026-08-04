@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"scalar-galaxy/internal/requestconfig"
+	"github.com/scalar/galaxy-go/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 

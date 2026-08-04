@@ -13,12 +13,12 @@ import (
 	"slices"
 	"time"
 
-	"scalar-galaxy/internal/apiform"
-	"scalar-galaxy/internal/apijson"
-	"scalar-galaxy/internal/apiquery"
-	"scalar-galaxy/internal/param"
-	"scalar-galaxy/internal/requestconfig"
-	"scalar-galaxy/option"
+	"github.com/scalar/galaxy-go/internal/apiform"
+	"github.com/scalar/galaxy-go/internal/apijson"
+	"github.com/scalar/galaxy-go/internal/apiquery"
+	"github.com/scalar/galaxy-go/internal/param"
+	"github.com/scalar/galaxy-go/internal/requestconfig"
+	"github.com/scalar/galaxy-go/option"
 )
 
 // PlanetService contains methods and other services that help with interacting

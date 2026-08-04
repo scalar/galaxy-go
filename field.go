@@ -1,7 +1,7 @@
 package scalargalaxy
 
 import (
-	"scalar-galaxy/internal/param"
+	"github.com/scalar/galaxy-go/internal/param"
 	"io"
 )
 

@@ -3,7 +3,7 @@
 package scalargalaxy
 
 import (
-	"scalar-galaxy/internal/apierror"
+	"github.com/scalar/galaxy-go/internal/apierror"
 )
 
 type Error = apierror.Error

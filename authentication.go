@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"slices"
 
-	"scalar-galaxy/internal/apijson"
-	"scalar-galaxy/internal/param"
-	"scalar-galaxy/internal/requestconfig"
-	"scalar-galaxy/option"
+	"github.com/scalar/galaxy-go/internal/apijson"
+	"github.com/scalar/galaxy-go/internal/param"
+	"github.com/scalar/galaxy-go/internal/requestconfig"
+	"github.com/scalar/galaxy-go/option"
 )
 
 // AuthenticationService contains methods and other services that help with interacting

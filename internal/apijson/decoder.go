@@ -12,7 +12,7 @@ import (
 
 	"github.com/tidwall/gjson"
 
-	"scalar-galaxy/internal/param"
+	"github.com/scalar/galaxy-go/internal/param"
 )
 
 // decoders is a synchronized map with roughly the following type:

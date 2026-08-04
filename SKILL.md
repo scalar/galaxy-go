@@ -1,16 +1,16 @@
 ---
 name: scalar-galaxy-go-sdk
-description: "Go SDK for Scalar Galaxy API. Use when writing Go code that calls Scalar Galaxy API with the scalar-galaxy package: installing it, constructing and authenticating the client, and calling API operations."
+description: "Go SDK for Scalar Galaxy API. Use when writing Go code that calls Scalar Galaxy API with the github.com/scalar/galaxy-go package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
 # Scalar Galaxy Go SDK
 
-Generated Go client for Scalar Galaxy API, published as `scalar-galaxy`. Use the generated client instead of hand-writing HTTP requests.
+Generated Go client for Scalar Galaxy API, published as `github.com/scalar/galaxy-go`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 
 ```sh
-go get scalar-galaxy
+go get github.com/scalar/galaxy-go
 ```
 
 ## Client setup and authentication
@@ -20,7 +20,7 @@ import (
 	"context"
 	"fmt"
 
-	sdk "scalar-galaxy"
+	sdk "github.com/scalar/galaxy-go"
 )
 
 client := sdk.NewClient()
@@ -45,8 +45,8 @@ import (
 	"fmt"
 	"os"
 
-	sdk "scalar-galaxy"
-	"scalar-galaxy/option"
+	sdk "github.com/scalar/galaxy-go"
+	"github.com/scalar/galaxy-go/option"
 )
 
 func main() {
@@ -81,7 +81,7 @@ if err != nil {
 	panic(err)
 }
 
-// imports: sdk "scalar-galaxy", "errors", "fmt"
+// imports: sdk "github.com/scalar/galaxy-go", "errors", "fmt"
 ```
 
 ## Requirements

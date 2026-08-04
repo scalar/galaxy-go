@@ -9,8 +9,8 @@ import (
 	"slices"
 	"strings"
 
-	"scalar-galaxy/internal/requestconfig"
-	"scalar-galaxy/option"
+	"github.com/scalar/galaxy-go/internal/requestconfig"
+	"github.com/scalar/galaxy-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with

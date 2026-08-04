@@ -1,4 +1,4 @@
-module scalar-galaxy
+module github.com/scalar/galaxy-go
 
 go 1.22
 

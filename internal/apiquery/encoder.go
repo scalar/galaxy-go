@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"scalar-galaxy/internal/param"
+	"github.com/scalar/galaxy-go/internal/param"
 )
 
 var encoders sync.Map // map[reflect.Type]encoderFunc

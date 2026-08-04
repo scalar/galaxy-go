@@ -13,7 +13,7 @@ import (
 
 	"github.com/tidwall/sjson"
 
-	"scalar-galaxy/internal/param"
+	"github.com/scalar/galaxy-go/internal/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc
