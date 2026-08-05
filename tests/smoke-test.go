@@ -44,6 +44,7 @@ func _smokeCase0() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
@@ -56,6 +57,7 @@ func _smokeCase1() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
@@ -64,6 +66,7 @@ func _smokeCase2() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
@@ -76,6 +79,7 @@ func _smokeCase3() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
@@ -91,6 +95,7 @@ func _smokeCase5() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
@@ -103,6 +108,7 @@ func _smokeCase6() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(celestialBody)
 }
 
@@ -115,6 +121,7 @@ func _smokeCase7() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(authentication)
 }
 
@@ -128,6 +135,7 @@ func _smokeCase8() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(authentication)
 }
 
@@ -136,6 +144,7 @@ func _smokeCase9() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(authentication)
 }
 

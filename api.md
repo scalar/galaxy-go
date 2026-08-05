@@ -50,6 +50,7 @@ planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAl
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -71,6 +72,7 @@ planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -87,6 +89,7 @@ planet, err := client.Planets.Get(context.Background(), 1)
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -108,6 +111,7 @@ planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdatePa
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -136,6 +140,7 @@ planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUpl
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -159,6 +164,7 @@ celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.Celes
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(celestialBody)
 ```
 
@@ -182,6 +188,7 @@ authentication, err := client.Authentication.NewUser(context.Background(), sdk.A
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```
 
@@ -204,6 +211,7 @@ authentication, err := client.Authentication.NewToken(context.Background(), sdk.
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```
 
@@ -220,5 +228,6 @@ authentication, err := client.Authentication.ListMe(context.Background())
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```

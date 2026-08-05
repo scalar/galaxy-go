@@ -53,6 +53,7 @@ func NewCelestialBodyService(opts ...option.RequestOption) (r *CelestialBodyServ
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(celestialBody)
 func (r *CelestialBodyService) New(ctx context.Context, body CelestialBodyNewParams, opts ...option.RequestOption) (res *CelestialBody, err error) {
 	opts = slices.Concat(r.Options, opts)
