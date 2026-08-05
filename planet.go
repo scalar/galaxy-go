@@ -56,6 +56,7 @@ func NewPlanetService(opts ...option.RequestOption) (r *PlanetService) {
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(planet)
 func (r *PlanetService) ListAllData(ctx context.Context, query PlanetListAllDataParams, opts ...option.RequestOption) (res *PlanetListAllDataResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -84,6 +85,7 @@ func (r *PlanetService) ListAllData(ctx context.Context, query PlanetListAllData
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(planet)
 func (r *PlanetService) New(ctx context.Context, body PlanetNewParams, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -108,6 +110,7 @@ func (r *PlanetService) New(ctx context.Context, body PlanetNewParams, opts ...o
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(planet)
 func (r *PlanetService) Get(ctx context.Context, planetID int64, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -137,6 +140,7 @@ func (r *PlanetService) Get(ctx context.Context, planetID int64, opts ...option.
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(planet)
 func (r *PlanetService) Update(ctx context.Context, planetID int64, body PlanetUpdateParams, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -186,6 +190,7 @@ func (r *PlanetService) Delete(ctx context.Context, planetID int64, opts ...opti
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(planet)
 func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body PlanetUploadImageParams, opts ...option.RequestOption) (res *PlanetUploadImageResponse, err error) {
 	opts = slices.Concat(r.Options, opts)

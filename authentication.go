@@ -49,6 +49,7 @@ func NewAuthenticationService(opts ...option.RequestOption) (r *AuthenticationSe
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(authentication)
 func (r *AuthenticationService) NewUser(ctx context.Context, body AuthenticationNewUserParams, opts ...option.RequestOption) (res *User, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -78,6 +79,7 @@ func (r *AuthenticationService) NewUser(ctx context.Context, body Authentication
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(authentication)
 func (r *AuthenticationService) NewToken(ctx context.Context, body AuthenticationNewTokenParams, opts ...option.RequestOption) (res *AuthenticationNewTokenResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
@@ -101,6 +103,7 @@ func (r *AuthenticationService) NewToken(ctx context.Context, body Authenticatio
 //     if err != nil {
 //     	panic(err)
 //     }
+//
 //     fmt.Println(authentication)
 func (r *AuthenticationService) ListMe(ctx context.Context, opts ...option.RequestOption) (res *User, err error) {
 	opts = slices.Concat(r.Options, opts)
