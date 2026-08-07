@@ -55,7 +55,7 @@ func main() {
 	)
 
 	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-		Limit: sdk.F[int64](10),
+		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
 	if err != nil {

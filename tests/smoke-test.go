@@ -38,7 +38,7 @@ type smokeCase struct {
 
 func _smokeCase0() {
 	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-		Limit: sdk.F[int64](10),
+		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
 	if err != nil {
@@ -51,8 +51,8 @@ func _smokeCase0() {
 func _smokeCase1() {
 	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 		Planet: sdk.PlanetParam{
-		Name: sdk.F[string]("Mars"),
-	},
+			Name: sdk.F[string]("Mars"),
+		},
 	})
 	if err != nil {
 		panic(err)
@@ -73,8 +73,8 @@ func _smokeCase2() {
 func _smokeCase3() {
 	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
 		Planet: sdk.PlanetParam{
-		Name: sdk.F[string]("Mars"),
-	},
+			Name: sdk.F[string]("Mars"),
+		},
 	})
 	if err != nil {
 		panic(err)
@@ -102,8 +102,8 @@ func _smokeCase5() {
 func _smokeCase6() {
 	celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
 		CelestialBody: sdk.PlanetParam{
-		Name: sdk.F[string]("Mars"),
-	},
+			Name: sdk.F[string]("Mars"),
+		},
 	})
 	if err != nil {
 		panic(err)
@@ -114,9 +114,9 @@ func _smokeCase6() {
 
 func _smokeCase7() {
 	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
-		Email: sdk.F[string]("marc@scalar.com"),
+		Email:    sdk.F[string]("marc@scalar.com"),
 		Password: sdk.F[string]("i-love-scalar"),
-		Name: sdk.F[string]("Marc"),
+		Name:     sdk.F[string]("Marc"),
 	})
 	if err != nil {
 		panic(err)
@@ -128,9 +128,9 @@ func _smokeCase7() {
 func _smokeCase8() {
 	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
 		Credentials: sdk.CredentialsParam{
-		Email: sdk.F[string]("marc@scalar.com"),
-		Password: sdk.F[string]("i-love-scalar"),
-	},
+			Email:    sdk.F[string]("marc@scalar.com"),
+			Password: sdk.F[string]("i-love-scalar"),
+		},
 	})
 	if err != nil {
 		panic(err)
@@ -147,7 +147,6 @@ func _smokeCase9() {
 
 	fmt.Println(authentication)
 }
-
 
 var cases = []smokeCase{
 	{
@@ -219,7 +218,6 @@ var cases = []smokeCase{
 		Path:      "/me",
 		Run:       _smokeCase9,
 	},
-
 }
 
 func selectedCases() []smokeCase {
