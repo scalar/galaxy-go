@@ -44,7 +44,7 @@ It's easy to say you know them all, but do you really? Retrieve all the planets 
 
 ```go
 planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-	Limit: sdk.F[int64](10),
+	Limit:  sdk.F[int64](10),
 	Offset: sdk.F[int64](0),
 })
 if err != nil {
@@ -66,8 +66,8 @@ Time to play god and create a new planet. What do you think? Ah, don't think too
 ```go
 planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 	Planet: sdk.PlanetParam{
-	Name: sdk.F[string]("Mars"),
-},
+		Name: sdk.F[string]("Mars"),
+	},
 })
 if err != nil {
 	panic(err)
@@ -105,8 +105,8 @@ Sometimes you make mistakes, that's fine. No worries, you can update all planets
 ```go
 planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
 	Planet: sdk.PlanetParam{
-	Name: sdk.F[string]("Mars"),
-},
+		Name: sdk.F[string]("Mars"),
+	},
 })
 if err != nil {
 	panic(err)
@@ -158,8 +158,8 @@ Stars, moons, comets, the occasional rogue asteroid — if it glows or drifts th
 ```go
 celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
 	CelestialBody: sdk.PlanetParam{
-	Name: sdk.F[string]("Mars"),
-},
+		Name: sdk.F[string]("Mars"),
+	},
 })
 if err != nil {
 	panic(err)
@@ -181,9 +181,9 @@ Time to create a user account, eh?
 
 ```go
 authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
-	Email: sdk.F[string]("marc@scalar.com"),
+	Email:    sdk.F[string]("marc@scalar.com"),
 	Password: sdk.F[string]("i-love-scalar"),
-	Name: sdk.F[string]("Marc"),
+	Name:     sdk.F[string]("Marc"),
 })
 if err != nil {
 	panic(err)
@@ -204,9 +204,9 @@ Yeah, this is the boring security stuff. Just get your super secret token and mo
 ```go
 authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
 	Credentials: sdk.CredentialsParam{
-	Email: sdk.F[string]("marc@scalar.com"),
-	Password: sdk.F[string]("i-love-scalar"),
-},
+		Email:    sdk.F[string]("marc@scalar.com"),
+		Password: sdk.F[string]("i-love-scalar"),
+	},
 })
 if err != nil {
 	panic(err)

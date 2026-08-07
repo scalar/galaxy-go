@@ -40,24 +40,26 @@ func NewPlanetService(opts ...option.RequestOption) (r *PlanetService) {
 // It's easy to say you know them all, but do you really? Retrieve all the planets and check whether you missed one.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     query: PlanetListAllDataParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	query: PlanetListAllDataParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *PlanetListAllDataResponse: OK
+//
+//	*PlanetListAllDataResponse: OK
 //
 // Example:
 //
-//     planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-//     	Limit: sdk.F[int64](10),
-//     	Offset: sdk.F[int64](0),
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
+//	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+//		Limit:  sdk.F[int64](10),
+//		Offset: sdk.F[int64](0),
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
 //
-//     fmt.Println(planet)
+//	fmt.Println(planet)
 func (r *PlanetService) ListAllData(ctx context.Context, query PlanetListAllDataParams, opts ...option.RequestOption) (res *PlanetListAllDataResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "planets"
@@ -68,25 +70,27 @@ func (r *PlanetService) ListAllData(ctx context.Context, query PlanetListAllData
 // Time to play god and create a new planet. What do you think? Ah, don't think too much. What could go wrong anyway?
 //
 // Parameters:
-//     ctx: Context for the request.
-//     body: PlanetNewParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	body: PlanetNewParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *Planet: Created
+//
+//	*Planet: Created
 //
 // Example:
 //
-//     planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
-//     	Planet: sdk.PlanetParam{
-//     	Name: sdk.F[string]("Mars"),
-//     },
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
+//	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
+//		Planet: sdk.PlanetParam{
+//			Name: sdk.F[string]("Mars"),
+//		},
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
 //
-//     fmt.Println(planet)
+//	fmt.Println(planet)
 func (r *PlanetService) New(ctx context.Context, body PlanetNewParams, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "planets"
@@ -97,21 +101,23 @@ func (r *PlanetService) New(ctx context.Context, body PlanetNewParams, opts ...o
 // You'll better learn a little bit more about the planets. It might come in handy once space travel is available for everyone.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     planetID: The ID of the planet to get
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	planetID: The ID of the planet to get
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *Planet: Planet Found
+//
+//	*Planet: Planet Found
 //
 // Example:
 //
-//     planet, err := client.Planets.Get(context.Background(), 1)
-//     if err != nil {
-//     	panic(err)
-//     }
+//	planet, err := client.Planets.Get(context.Background(), 1)
+//	if err != nil {
+//		panic(err)
+//	}
 //
-//     fmt.Println(planet)
+//	fmt.Println(planet)
 func (r *PlanetService) Get(ctx context.Context, planetID int64, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := fmt.Sprintf("planets/%v", planetID)
@@ -122,26 +128,28 @@ func (r *PlanetService) Get(ctx context.Context, planetID int64, opts ...option.
 // Sometimes you make mistakes, that's fine. No worries, you can update all planets.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     planetID: The ID of the planet to get
-//     body: PlanetUpdateParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	planetID: The ID of the planet to get
+//	body: PlanetUpdateParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *Planet: Planet updated successfully
+//
+//	*Planet: Planet updated successfully
 //
 // Example:
 //
-//     planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
-//     	Planet: sdk.PlanetParam{
-//     	Name: sdk.F[string]("Mars"),
-//     },
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
+//	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
+//		Planet: sdk.PlanetParam{
+//			Name: sdk.F[string]("Mars"),
+//		},
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
 //
-//     fmt.Println(planet)
+//	fmt.Println(planet)
 func (r *PlanetService) Update(ctx context.Context, planetID int64, body PlanetUpdateParams, opts ...option.RequestOption) (res *Planet, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := fmt.Sprintf("planets/%v", planetID)
@@ -152,19 +160,21 @@ func (r *PlanetService) Update(ctx context.Context, planetID int64, body PlanetU
 // This endpoint was used to delete planets. Unfortunately, that caused a lot of trouble for planets with life. So, this endpoint is now deprecated and should not be used anymore.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     planetID: The ID of the planet to get
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	planetID: The ID of the planet to get
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     error: No Content
+//
+//	error: No Content
 //
 // Example:
 //
-//     err := client.Planets.Delete(context.Background(), 1)
-//     if err != nil {
-//     	panic(err)
-//     }
+//	err := client.Planets.Delete(context.Background(), 1)
+//	if err != nil {
+//		panic(err)
+//	}
 func (r *PlanetService) Delete(ctx context.Context, planetID int64, opts ...option.RequestOption) (err error) {
 	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
@@ -176,22 +186,24 @@ func (r *PlanetService) Delete(ctx context.Context, planetID int64, opts ...opti
 // Got a crazy good photo of a planet? Share it with the world!
 //
 // Parameters:
-//     ctx: Context for the request.
-//     planetID: The ID of the planet to get
-//     body: PlanetUploadImageParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	planetID: The ID of the planet to get
+//	body: PlanetUploadImageParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *PlanetUploadImageResponse: Image uploaded
+//
+//	*PlanetUploadImageResponse: Image uploaded
 //
 // Example:
 //
-//     planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
-//     if err != nil {
-//     	panic(err)
-//     }
+//	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
+//	if err != nil {
+//		panic(err)
+//	}
 //
-//     fmt.Println(planet)
+//	fmt.Println(planet)
 func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body PlanetUploadImageParams, opts ...option.RequestOption) (res *PlanetUploadImageResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := fmt.Sprintf("planets/%v/image", planetID)
@@ -200,48 +212,48 @@ func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body Pl
 }
 
 type Planet struct {
-	ID int64 `json:"id" api:"required"`
-	Name string `json:"name" api:"required"`
-	Description string `json:"description" api:"nullable"`
-	Type PlanetType `json:"type"`
+	ID          int64      `json:"id" api:"required"`
+	Name        string     `json:"name" api:"required"`
+	Description string     `json:"description" api:"nullable"`
+	Type        PlanetType `json:"type"`
 	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex float64 `json:"habitabilityIndex"`
+	HabitabilityIndex  float64                  `json:"habitabilityIndex"`
 	PhysicalProperties PlanetPhysicalProperties `json:"physicalProperties"`
 	// Atmospheric composition
-	Atmosphere []PlanetAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
-	Image string `json:"image" api:"nullable"`
-	Satellites []*Satellite `json:"satellites"`
+	Atmosphere   []PlanetAtmosphere `json:"atmosphere"`
+	DiscoveredAt time.Time          `json:"discoveredAt" format:"date-time"`
+	Image        string             `json:"image" api:"nullable"`
+	Satellites   []*Satellite       `json:"satellites"`
 	// A user
-	Creator User `json:"creator"`
-	Tags []string `json:"tags"`
+	Creator     User      `json:"creator"`
+	Tags        []string  `json:"tags"`
 	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
 	// URL which gets invoked upon a successful operation
 	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
 	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
-	JSON planetJSON `json:"-"`
+	FailureCallbackURL string     `json:"failureCallbackUrl" format:"uri"`
+	JSON               planetJSON `json:"-"`
 }
 
 // planetJSON contains the JSON metadata for the struct [Planet]
 type planetJSON struct {
-	ID apijson.Field
-	Name apijson.Field
-	Description apijson.Field
-	Type apijson.Field
-	HabitabilityIndex apijson.Field
+	ID                 apijson.Field
+	Name               apijson.Field
+	Description        apijson.Field
+	Type               apijson.Field
+	HabitabilityIndex  apijson.Field
 	PhysicalProperties apijson.Field
-	Atmosphere apijson.Field
-	DiscoveredAt apijson.Field
-	Image apijson.Field
-	Satellites apijson.Field
-	Creator apijson.Field
-	Tags apijson.Field
-	LastUpdated apijson.Field
+	Atmosphere         apijson.Field
+	DiscoveredAt       apijson.Field
+	Image              apijson.Field
+	Satellites         apijson.Field
+	Creator            apijson.Field
+	Tags               apijson.Field
+	LastUpdated        apijson.Field
 	SuccessCallbackURL apijson.Field
 	FailureCallbackURL apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *Planet) UnmarshalJSON(data []byte) (err error) {
@@ -257,20 +269,20 @@ type PlanetParam struct {
 	// Atmospheric composition
 	Atmosphere param.Field[[]PlanetAtmosphereParam] `json:"atmosphere"`
 	// A user
-	Creator param.Field[UserParam] `json:"creator"`
-	Description param.Field[string] `json:"description"`
+	Creator      param.Field[UserParam] `json:"creator"`
+	Description  param.Field[string]    `json:"description"`
 	DiscoveredAt param.Field[time.Time] `json:"discoveredAt" format:"date-time"`
 	// URL which gets invoked upon a failed operation
 	FailureCallbackURL param.Field[string] `json:"failureCallbackUrl" format:"uri"`
 	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex param.Field[float64] `json:"habitabilityIndex"`
-	Image param.Field[string] `json:"image"`
+	HabitabilityIndex  param.Field[float64]                       `json:"habitabilityIndex"`
+	Image              param.Field[string]                        `json:"image"`
 	PhysicalProperties param.Field[PlanetPhysicalPropertiesParam] `json:"physicalProperties"`
-	Satellites param.Field[[]*SatelliteParam] `json:"satellites"`
+	Satellites         param.Field[[]*SatelliteParam]             `json:"satellites"`
 	// URL which gets invoked upon a successful operation
-	SuccessCallbackURL param.Field[string] `json:"successCallbackUrl" format:"uri"`
-	Tags param.Field[[]string] `json:"tags"`
-	Type param.Field[PlanetType] `json:"type"`
+	SuccessCallbackURL param.Field[string]     `json:"successCallbackUrl" format:"uri"`
+	Tags               param.Field[[]string]   `json:"tags"`
+	Type               param.Field[PlanetType] `json:"type"`
 }
 
 func (r PlanetParam) MarshalJSON() (data []byte, err error) {
@@ -281,10 +293,10 @@ type PlanetType string
 
 const (
 	PlanetTypeTerrestrial PlanetType = "terrestrial"
-	PlanetTypeGasGiant PlanetType = "gas_giant"
-	PlanetTypeIceGiant PlanetType = "ice_giant"
-	PlanetTypeDwarf PlanetType = "dwarf"
-	PlanetTypeSuperEarth PlanetType = "super_earth"
+	PlanetTypeGasGiant    PlanetType = "gas_giant"
+	PlanetTypeIceGiant    PlanetType = "ice_giant"
+	PlanetTypeDwarf       PlanetType = "dwarf"
+	PlanetTypeSuperEarth  PlanetType = "super_earth"
 )
 
 func (r PlanetType) IsKnown() bool {
@@ -296,24 +308,24 @@ func (r PlanetType) IsKnown() bool {
 }
 
 type Satellite struct {
-	Name string `json:"name" api:"required"`
-	ID int64 `json:"id"`
+	Name        string `json:"name" api:"required"`
+	ID          int64  `json:"id"`
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
-	Diameter float64 `json:"diameter"`
-	Type SatelliteType `json:"type"`
-	Orbit interface{} `json:"orbit"`
-	JSON satelliteJSON `json:"-"`
+	Diameter float64       `json:"diameter"`
+	Type     SatelliteType `json:"type"`
+	Orbit    interface{}   `json:"orbit"`
+	JSON     satelliteJSON `json:"-"`
 }
 
 // satelliteJSON contains the JSON metadata for the struct [Satellite]
 type satelliteJSON struct {
-	Name apijson.Field
-	ID apijson.Field
+	Name        apijson.Field
+	ID          apijson.Field
 	Description apijson.Field
-	Diameter apijson.Field
-	Type apijson.Field
-	Orbit apijson.Field
+	Diameter    apijson.Field
+	Type        apijson.Field
+	Orbit       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -327,12 +339,12 @@ func (r satelliteJSON) RawJSON() string {
 }
 
 type SatelliteParam struct {
-	Name param.Field[string] `json:"name" api:"required"`
+	Name        param.Field[string] `json:"name" api:"required"`
 	Description param.Field[string] `json:"description"`
 	// Diameter in kilometers
-	Diameter param.Field[float64] `json:"diameter"`
-	Orbit param.Field[interface{}] `json:"orbit"`
-	Type param.Field[SatelliteType] `json:"type"`
+	Diameter param.Field[float64]       `json:"diameter"`
+	Orbit    param.Field[interface{}]   `json:"orbit"`
+	Type     param.Field[SatelliteType] `json:"type"`
 }
 
 func (r SatelliteParam) MarshalJSON() (data []byte, err error) {
@@ -342,9 +354,9 @@ func (r SatelliteParam) MarshalJSON() (data []byte, err error) {
 type SatelliteType string
 
 const (
-	SatelliteTypeMoon SatelliteType = "moon"
+	SatelliteTypeMoon     SatelliteType = "moon"
 	SatelliteTypeAsteroid SatelliteType = "asteroid"
-	SatelliteTypeComet SatelliteType = "comet"
+	SatelliteTypeComet    SatelliteType = "comet"
 )
 
 func (r SatelliteType) IsKnown() bool {
@@ -356,15 +368,15 @@ func (r SatelliteType) IsKnown() bool {
 }
 
 type PlanetListAllDataResponse struct {
-	Data []interface{} `json:"data"`
+	Data []interface{}                 `json:"data"`
 	Meta PlanetListAllDataResponseMeta `json:"meta"`
 	JSON planetListAllDataResponseJSON `json:"-"`
 }
 
 // planetListAllDataResponseJSON contains the JSON metadata for the struct [PlanetListAllDataResponse]
 type planetListAllDataResponseJSON struct {
-	Data apijson.Field
-	Meta apijson.Field
+	Data        apijson.Field
+	Meta        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -434,7 +446,7 @@ type PlanetPhysicalPropertiesParam struct {
 	// Mass in Earth masses (must be greater than 0)
 	Mass param.Field[float64] `json:"mass"`
 	// Radius in Earth radii (must be greater than 0)
-	Radius param.Field[float64] `json:"radius"`
+	Radius      param.Field[float64]                                  `json:"radius"`
 	Temperature param.Field[PlanetPhysicalPropertiesTemperatureParam] `json:"temperature"`
 }
 
@@ -443,7 +455,7 @@ func (r PlanetPhysicalPropertiesParam) MarshalJSON() (data []byte, err error) {
 }
 
 type PlanetAtmosphereParam struct {
-	Compound param.Field[string] `json:"compound"`
+	Compound   param.Field[string]  `json:"compound"`
 	Percentage param.Field[float64] `json:"percentage"`
 }
 
@@ -452,19 +464,19 @@ func (r PlanetAtmosphereParam) MarshalJSON() (data []byte, err error) {
 }
 
 type PlanetListAllDataResponseMeta struct {
-	Limit int64 `json:"limit"`
-	Offset int64 `json:"offset"`
-	Total int64 `json:"total"`
-	Next string `json:"next" api:"nullable"`
-	JSON planetListAllDataResponseMetaJSON `json:"-"`
+	Limit  int64                             `json:"limit"`
+	Offset int64                             `json:"offset"`
+	Total  int64                             `json:"total"`
+	Next   string                            `json:"next" api:"nullable"`
+	JSON   planetListAllDataResponseMetaJSON `json:"-"`
 }
 
 // planetListAllDataResponseMetaJSON contains the JSON metadata for the struct [PlanetListAllDataResponseMeta]
 type planetListAllDataResponseMetaJSON struct {
-	Limit apijson.Field
-	Offset apijson.Field
-	Total apijson.Field
-	Next apijson.Field
+	Limit       apijson.Field
+	Offset      apijson.Field
+	Total       apijson.Field
+	Next        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -486,17 +498,17 @@ type PlanetUploadImageResponse struct {
 	// Size of the uploaded image in bytes
 	FileSize int64 `json:"fileSize"`
 	// The content type of the uploaded image
-	MimeType string `json:"mimeType"`
-	JSON planetUploadImageResponseJSON `json:"-"`
+	MimeType string                        `json:"mimeType"`
+	JSON     planetUploadImageResponseJSON `json:"-"`
 }
 
 // planetUploadImageResponseJSON contains the JSON metadata for the struct [PlanetUploadImageResponse]
 type planetUploadImageResponseJSON struct {
-	Message apijson.Field
-	ImageURL apijson.Field
-	UploadedAt apijson.Field
-	FileSize apijson.Field
-	MimeType apijson.Field
+	Message     apijson.Field
+	ImageURL    apijson.Field
+	UploadedAt  apijson.Field
+	FileSize    apijson.Field
+	MimeType    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -515,16 +527,16 @@ type PlanetPhysicalProperties struct {
 	// Radius in Earth radii (must be greater than 0)
 	Radius float64 `json:"radius"`
 	// Surface gravity in Earth g
-	Gravity float64 `json:"gravity"`
+	Gravity     float64                             `json:"gravity"`
 	Temperature PlanetPhysicalPropertiesTemperature `json:"temperature"`
-	JSON planetPhysicalPropertiesJSON `json:"-"`
+	JSON        planetPhysicalPropertiesJSON        `json:"-"`
 }
 
 // planetPhysicalPropertiesJSON contains the JSON metadata for the struct [PlanetPhysicalProperties]
 type planetPhysicalPropertiesJSON struct {
-	Mass apijson.Field
-	Radius apijson.Field
-	Gravity apijson.Field
+	Mass        apijson.Field
+	Radius      apijson.Field
+	Gravity     apijson.Field
 	Temperature apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -539,15 +551,15 @@ func (r planetPhysicalPropertiesJSON) RawJSON() string {
 }
 
 type PlanetAtmosphere struct {
-	Compound string `json:"compound"`
-	Percentage float64 `json:"percentage"`
-	JSON planetAtmosphereJSON `json:"-"`
+	Compound   string               `json:"compound"`
+	Percentage float64              `json:"percentage"`
+	JSON       planetAtmosphereJSON `json:"-"`
 }
 
 // planetAtmosphereJSON contains the JSON metadata for the struct [PlanetAtmosphere]
 type planetAtmosphereJSON struct {
-	Compound apijson.Field
-	Percentage apijson.Field
+	Compound    apijson.Field
+	Percentage  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -579,15 +591,15 @@ type PlanetPhysicalPropertiesTemperature struct {
 	// Maximum temperature in Kelvin
 	Max float64 `json:"max"`
 	// Average temperature in Kelvin
-	Average float64 `json:"average"`
-	JSON planetPhysicalPropertiesTemperatureJSON `json:"-"`
+	Average float64                                 `json:"average"`
+	JSON    planetPhysicalPropertiesTemperatureJSON `json:"-"`
 }
 
 // planetPhysicalPropertiesTemperatureJSON contains the JSON metadata for the struct [PlanetPhysicalPropertiesTemperature]
 type planetPhysicalPropertiesTemperatureJSON struct {
-	Min apijson.Field
-	Max apijson.Field
-	Average apijson.Field
+	Min         apijson.Field
+	Max         apijson.Field
+	Average     apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
