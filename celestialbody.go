@@ -36,24 +36,27 @@ func NewCelestialBodyService(opts ...option.RequestOption) (r *CelestialBodyServ
 // Stars, moons, comets, the occasional rogue asteroid — if it glows or drifts through the void, you can add it here.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     body: CelestialBodyNewParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	body: CelestialBodyNewParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *CelestialBody: Celestial body created
+//
+//	*CelestialBody: Celestial body created
 //
 // Example:
 //
-//     celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
-//     	CelestialBody: sdk.PlanetParam{
-//     	Name: sdk.F[string]("Mars"),
-//     },
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
-//     fmt.Println(celestialBody)
+//	celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
+//		CelestialBody: sdk.PlanetParam{
+//			Name: sdk.F[string]("Mars"),
+//		},
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Println(celestialBody)
 func (r *CelestialBodyService) New(ctx context.Context, body CelestialBodyNewParams, opts ...option.RequestOption) (res *CelestialBody, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "celestial-bodies"
@@ -70,54 +73,54 @@ func (r CelestialBodyNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type CelestialBody struct {
-	Name string `json:"name" api:"required"`
-	ID int64 `json:"id"`
-	Description string `json:"description" api:"nullable"`
-	Type CelestialBodyType `json:"type"`
+	Name        string            `json:"name" api:"required"`
+	ID          int64             `json:"id"`
+	Description string            `json:"description" api:"nullable"`
+	Type        CelestialBodyType `json:"type"`
 	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex float64 `json:"habitabilityIndex"`
+	HabitabilityIndex  float64     `json:"habitabilityIndex"`
 	PhysicalProperties interface{} `json:"physicalProperties"`
 	// Atmospheric composition
-	Atmosphere interface{} `json:"atmosphere"`
-	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
-	Image string `json:"image" api:"nullable"`
-	Satellites interface{} `json:"satellites"`
+	Atmosphere   interface{} `json:"atmosphere"`
+	DiscoveredAt time.Time   `json:"discoveredAt" format:"date-time"`
+	Image        string      `json:"image" api:"nullable"`
+	Satellites   interface{} `json:"satellites"`
 	// A user
-	Creator User `json:"creator"`
-	Tags interface{} `json:"tags"`
-	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
+	Creator     User        `json:"creator"`
+	Tags        interface{} `json:"tags"`
+	LastUpdated time.Time   `json:"lastUpdated" format:"date-time"`
 	// URL which gets invoked upon a successful operation
 	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
 	// URL which gets invoked upon a failed operation
 	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
 	// Diameter in kilometers
-	Diameter float64 `json:"diameter"`
-	Orbit interface{} `json:"orbit"`
-	JSON celestialBodyJSON `json:"-"`
-	union CelestialBodyUnion
+	Diameter float64           `json:"diameter"`
+	Orbit    interface{}       `json:"orbit"`
+	JSON     celestialBodyJSON `json:"-"`
+	union    CelestialBodyUnion
 }
 
 // celestialBodyJSON contains the JSON metadata for the struct [CelestialBody]
 type celestialBodyJSON struct {
-	Name apijson.Field
-	ID apijson.Field
-	Description apijson.Field
-	Type apijson.Field
-	HabitabilityIndex apijson.Field
+	Name               apijson.Field
+	ID                 apijson.Field
+	Description        apijson.Field
+	Type               apijson.Field
+	HabitabilityIndex  apijson.Field
 	PhysicalProperties apijson.Field
-	Atmosphere apijson.Field
-	DiscoveredAt apijson.Field
-	Image apijson.Field
-	Satellites apijson.Field
-	Creator apijson.Field
-	Tags apijson.Field
-	LastUpdated apijson.Field
+	Atmosphere         apijson.Field
+	DiscoveredAt       apijson.Field
+	Image              apijson.Field
+	Satellites         apijson.Field
+	Creator            apijson.Field
+	Tags               apijson.Field
+	LastUpdated        apijson.Field
 	SuccessCallbackURL apijson.Field
 	FailureCallbackURL apijson.Field
-	Diameter apijson.Field
-	Orbit apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Diameter           apijson.Field
+	Orbit              apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r celestialBodyJSON) RawJSON() string {
@@ -170,24 +173,24 @@ type CelestialBodyUnion interface {
 }
 
 type CelestialBodySatellite struct {
-	Name string `json:"name" api:"required"`
-	ID int64 `json:"id"`
+	Name        string `json:"name" api:"required"`
+	ID          int64  `json:"id"`
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
-	Diameter float64 `json:"diameter"`
-	Type CelestialBodySatelliteType `json:"type"`
-	Orbit interface{} `json:"orbit"`
-	JSON celestialBodySatelliteJSON `json:"-"`
+	Diameter float64                    `json:"diameter"`
+	Type     CelestialBodySatelliteType `json:"type"`
+	Orbit    interface{}                `json:"orbit"`
+	JSON     celestialBodySatelliteJSON `json:"-"`
 }
 
 // celestialBodySatelliteJSON contains the JSON metadata for the struct [CelestialBodySatellite]
 type celestialBodySatelliteJSON struct {
-	Name apijson.Field
-	ID apijson.Field
+	Name        apijson.Field
+	ID          apijson.Field
 	Description apijson.Field
-	Diameter apijson.Field
-	Type apijson.Field
-	Orbit apijson.Field
+	Diameter    apijson.Field
+	Type        apijson.Field
+	Orbit       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -206,13 +209,13 @@ type CelestialBodyType string
 
 const (
 	CelestialBodyTypeTerrestrial CelestialBodyType = "terrestrial"
-	CelestialBodyTypeGasGiant CelestialBodyType = "gas_giant"
-	CelestialBodyTypeIceGiant CelestialBodyType = "ice_giant"
-	CelestialBodyTypeDwarf CelestialBodyType = "dwarf"
-	CelestialBodyTypeSuperEarth CelestialBodyType = "super_earth"
-	CelestialBodyTypeMoon CelestialBodyType = "moon"
-	CelestialBodyTypeAsteroid CelestialBodyType = "asteroid"
-	CelestialBodyTypeComet CelestialBodyType = "comet"
+	CelestialBodyTypeGasGiant    CelestialBodyType = "gas_giant"
+	CelestialBodyTypeIceGiant    CelestialBodyType = "ice_giant"
+	CelestialBodyTypeDwarf       CelestialBodyType = "dwarf"
+	CelestialBodyTypeSuperEarth  CelestialBodyType = "super_earth"
+	CelestialBodyTypeMoon        CelestialBodyType = "moon"
+	CelestialBodyTypeAsteroid    CelestialBodyType = "asteroid"
+	CelestialBodyTypeComet       CelestialBodyType = "comet"
 )
 
 func (r CelestialBodyType) IsKnown() bool {
@@ -224,21 +227,21 @@ func (r CelestialBodyType) IsKnown() bool {
 }
 
 type CelestialBodyParam struct {
-	Name param.Field[string] `json:"name" api:"required"`
-	Atmosphere param.Field[interface{}] `json:"atmosphere"`
-	Creator param.Field[UserParam] `json:"creator"`
-	Description param.Field[string] `json:"description"`
-	Diameter param.Field[float64] `json:"diameter"`
-	DiscoveredAt param.Field[time.Time] `json:"discoveredAt" format:"date-time"`
-	FailureCallbackURL param.Field[string] `json:"failureCallbackUrl" format:"uri"`
-	HabitabilityIndex param.Field[float64] `json:"habitabilityIndex"`
-	Image param.Field[string] `json:"image"`
-	Orbit param.Field[interface{}] `json:"orbit"`
-	PhysicalProperties param.Field[interface{}] `json:"physicalProperties"`
-	Satellites param.Field[interface{}] `json:"satellites"`
-	SuccessCallbackURL param.Field[string] `json:"successCallbackUrl" format:"uri"`
-	Tags param.Field[interface{}] `json:"tags"`
-	Type param.Field[CelestialBodyType] `json:"type"`
+	Name               param.Field[string]            `json:"name" api:"required"`
+	Atmosphere         param.Field[interface{}]       `json:"atmosphere"`
+	Creator            param.Field[UserParam]         `json:"creator"`
+	Description        param.Field[string]            `json:"description"`
+	Diameter           param.Field[float64]           `json:"diameter"`
+	DiscoveredAt       param.Field[time.Time]         `json:"discoveredAt" format:"date-time"`
+	FailureCallbackURL param.Field[string]            `json:"failureCallbackUrl" format:"uri"`
+	HabitabilityIndex  param.Field[float64]           `json:"habitabilityIndex"`
+	Image              param.Field[string]            `json:"image"`
+	Orbit              param.Field[interface{}]       `json:"orbit"`
+	PhysicalProperties param.Field[interface{}]       `json:"physicalProperties"`
+	Satellites         param.Field[interface{}]       `json:"satellites"`
+	SuccessCallbackURL param.Field[string]            `json:"successCallbackUrl" format:"uri"`
+	Tags               param.Field[interface{}]       `json:"tags"`
+	Type               param.Field[CelestialBodyType] `json:"type"`
 }
 
 func (r CelestialBodyParam) MarshalJSON() (data []byte, err error) {
@@ -248,12 +251,12 @@ func (r CelestialBodyParam) MarshalJSON() (data []byte, err error) {
 func (r CelestialBodyParam) implementsCelestialBodyUnionParam() {}
 
 type CelestialBodySatelliteParam struct {
-	Name param.Field[string] `json:"name" api:"required"`
+	Name        param.Field[string] `json:"name" api:"required"`
 	Description param.Field[string] `json:"description"`
 	// Diameter in kilometers
-	Diameter param.Field[float64] `json:"diameter"`
-	Orbit param.Field[interface{}] `json:"orbit"`
-	Type param.Field[CelestialBodySatelliteType] `json:"type"`
+	Diameter param.Field[float64]                    `json:"diameter"`
+	Orbit    param.Field[interface{}]                `json:"orbit"`
+	Type     param.Field[CelestialBodySatelliteType] `json:"type"`
 }
 
 func (r CelestialBodySatelliteParam) MarshalJSON() (data []byte, err error) {
@@ -263,9 +266,9 @@ func (r CelestialBodySatelliteParam) MarshalJSON() (data []byte, err error) {
 type CelestialBodySatelliteType string
 
 const (
-	CelestialBodySatelliteTypeMoon CelestialBodySatelliteType = "moon"
+	CelestialBodySatelliteTypeMoon     CelestialBodySatelliteType = "moon"
 	CelestialBodySatelliteTypeAsteroid CelestialBodySatelliteType = "asteroid"
-	CelestialBodySatelliteTypeComet CelestialBodySatelliteType = "comet"
+	CelestialBodySatelliteTypeComet    CelestialBodySatelliteType = "comet"
 )
 
 func (r CelestialBodySatelliteType) IsKnown() bool {

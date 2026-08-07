@@ -60,48 +60,48 @@ func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...opt
 }
 
 type NewPlanetWebhookEvent struct {
-	ID int64 `json:"id" api:"required"`
-	Name string `json:"name" api:"required"`
-	Description string `json:"description" api:"nullable"`
-	Type NewPlanetWebhookEventType `json:"type"`
+	ID          int64                     `json:"id" api:"required"`
+	Name        string                    `json:"name" api:"required"`
+	Description string                    `json:"description" api:"nullable"`
+	Type        NewPlanetWebhookEventType `json:"type"`
 	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex float64 `json:"habitabilityIndex"`
+	HabitabilityIndex  float64                                 `json:"habitabilityIndex"`
 	PhysicalProperties NewPlanetWebhookEventPhysicalProperties `json:"physicalProperties"`
 	// Atmospheric composition
-	Atmosphere []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
-	Image string `json:"image" api:"nullable"`
-	Satellites []NewPlanetWebhookEventSatellite `json:"satellites"`
+	Atmosphere   []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
+	DiscoveredAt time.Time                         `json:"discoveredAt" format:"date-time"`
+	Image        string                            `json:"image" api:"nullable"`
+	Satellites   []NewPlanetWebhookEventSatellite  `json:"satellites"`
 	// A user
-	Creator User `json:"creator"`
-	Tags []string `json:"tags"`
+	Creator     User      `json:"creator"`
+	Tags        []string  `json:"tags"`
 	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
 	// URL which gets invoked upon a successful operation
 	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
 	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
-	JSON newPlanetWebhookEventJSON `json:"-"`
+	FailureCallbackURL string                    `json:"failureCallbackUrl" format:"uri"`
+	JSON               newPlanetWebhookEventJSON `json:"-"`
 }
 
 // newPlanetWebhookEventJSON contains the JSON metadata for the struct [NewPlanetWebhookEvent]
 type newPlanetWebhookEventJSON struct {
-	ID apijson.Field
-	Name apijson.Field
-	Description apijson.Field
-	Type apijson.Field
-	HabitabilityIndex apijson.Field
+	ID                 apijson.Field
+	Name               apijson.Field
+	Description        apijson.Field
+	Type               apijson.Field
+	HabitabilityIndex  apijson.Field
 	PhysicalProperties apijson.Field
-	Atmosphere apijson.Field
-	DiscoveredAt apijson.Field
-	Image apijson.Field
-	Satellites apijson.Field
-	Creator apijson.Field
-	Tags apijson.Field
-	LastUpdated apijson.Field
+	Atmosphere         apijson.Field
+	DiscoveredAt       apijson.Field
+	Image              apijson.Field
+	Satellites         apijson.Field
+	Creator            apijson.Field
+	Tags               apijson.Field
+	LastUpdated        apijson.Field
 	SuccessCallbackURL apijson.Field
 	FailureCallbackURL apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *NewPlanetWebhookEvent) UnmarshalJSON(data []byte) (err error) {
@@ -116,10 +116,10 @@ type NewPlanetWebhookEventType string
 
 const (
 	NewPlanetWebhookEventTypeTerrestrial NewPlanetWebhookEventType = "terrestrial"
-	NewPlanetWebhookEventTypeGasGiant NewPlanetWebhookEventType = "gas_giant"
-	NewPlanetWebhookEventTypeIceGiant NewPlanetWebhookEventType = "ice_giant"
-	NewPlanetWebhookEventTypeDwarf NewPlanetWebhookEventType = "dwarf"
-	NewPlanetWebhookEventTypeSuperEarth NewPlanetWebhookEventType = "super_earth"
+	NewPlanetWebhookEventTypeGasGiant    NewPlanetWebhookEventType = "gas_giant"
+	NewPlanetWebhookEventTypeIceGiant    NewPlanetWebhookEventType = "ice_giant"
+	NewPlanetWebhookEventTypeDwarf       NewPlanetWebhookEventType = "dwarf"
+	NewPlanetWebhookEventTypeSuperEarth  NewPlanetWebhookEventType = "super_earth"
 )
 
 func (r NewPlanetWebhookEventType) IsKnown() bool {
@@ -136,16 +136,16 @@ type NewPlanetWebhookEventPhysicalProperties struct {
 	// Radius in Earth radii (must be greater than 0)
 	Radius float64 `json:"radius"`
 	// Surface gravity in Earth g
-	Gravity float64 `json:"gravity"`
+	Gravity     float64                                            `json:"gravity"`
 	Temperature NewPlanetWebhookEventPhysicalPropertiesTemperature `json:"temperature"`
-	JSON newPlanetWebhookEventPhysicalPropertiesJSON `json:"-"`
+	JSON        newPlanetWebhookEventPhysicalPropertiesJSON        `json:"-"`
 }
 
 // newPlanetWebhookEventPhysicalPropertiesJSON contains the JSON metadata for the struct [NewPlanetWebhookEventPhysicalProperties]
 type newPlanetWebhookEventPhysicalPropertiesJSON struct {
-	Mass apijson.Field
-	Radius apijson.Field
-	Gravity apijson.Field
+	Mass        apijson.Field
+	Radius      apijson.Field
+	Gravity     apijson.Field
 	Temperature apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -165,15 +165,15 @@ type NewPlanetWebhookEventPhysicalPropertiesTemperature struct {
 	// Maximum temperature in Kelvin
 	Max float64 `json:"max"`
 	// Average temperature in Kelvin
-	Average float64 `json:"average"`
-	JSON newPlanetWebhookEventPhysicalPropertiesTemperatureJSON `json:"-"`
+	Average float64                                                `json:"average"`
+	JSON    newPlanetWebhookEventPhysicalPropertiesTemperatureJSON `json:"-"`
 }
 
 // newPlanetWebhookEventPhysicalPropertiesTemperatureJSON contains the JSON metadata for the struct [NewPlanetWebhookEventPhysicalPropertiesTemperature]
 type newPlanetWebhookEventPhysicalPropertiesTemperatureJSON struct {
-	Min apijson.Field
-	Max apijson.Field
-	Average apijson.Field
+	Min         apijson.Field
+	Max         apijson.Field
+	Average     apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -187,15 +187,15 @@ func (r newPlanetWebhookEventPhysicalPropertiesTemperatureJSON) RawJSON() string
 }
 
 type NewPlanetWebhookEventAtmosphere struct {
-	Compound string `json:"compound"`
-	Percentage float64 `json:"percentage"`
-	JSON newPlanetWebhookEventAtmosphereJSON `json:"-"`
+	Compound   string                              `json:"compound"`
+	Percentage float64                             `json:"percentage"`
+	JSON       newPlanetWebhookEventAtmosphereJSON `json:"-"`
 }
 
 // newPlanetWebhookEventAtmosphereJSON contains the JSON metadata for the struct [NewPlanetWebhookEventAtmosphere]
 type newPlanetWebhookEventAtmosphereJSON struct {
-	Compound apijson.Field
-	Percentage apijson.Field
+	Compound    apijson.Field
+	Percentage  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -209,24 +209,24 @@ func (r newPlanetWebhookEventAtmosphereJSON) RawJSON() string {
 }
 
 type NewPlanetWebhookEventSatellite struct {
-	Name string `json:"name" api:"required"`
-	ID int64 `json:"id"`
+	Name        string `json:"name" api:"required"`
+	ID          int64  `json:"id"`
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
-	Diameter float64 `json:"diameter"`
-	Type NewPlanetWebhookEventSatellitesType `json:"type"`
-	Orbit interface{} `json:"orbit"`
-	JSON newPlanetWebhookEventSatelliteJSON `json:"-"`
+	Diameter float64                             `json:"diameter"`
+	Type     NewPlanetWebhookEventSatellitesType `json:"type"`
+	Orbit    interface{}                         `json:"orbit"`
+	JSON     newPlanetWebhookEventSatelliteJSON  `json:"-"`
 }
 
 // newPlanetWebhookEventSatelliteJSON contains the JSON metadata for the struct [NewPlanetWebhookEventSatellite]
 type newPlanetWebhookEventSatelliteJSON struct {
-	Name apijson.Field
-	ID apijson.Field
+	Name        apijson.Field
+	ID          apijson.Field
 	Description apijson.Field
-	Diameter apijson.Field
-	Type apijson.Field
-	Orbit apijson.Field
+	Diameter    apijson.Field
+	Type        apijson.Field
+	Orbit       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -242,9 +242,9 @@ func (r newPlanetWebhookEventSatelliteJSON) RawJSON() string {
 type NewPlanetWebhookEventSatellitesType string
 
 const (
-	NewPlanetWebhookEventSatellitesTypeMoon NewPlanetWebhookEventSatellitesType = "moon"
+	NewPlanetWebhookEventSatellitesTypeMoon     NewPlanetWebhookEventSatellitesType = "moon"
 	NewPlanetWebhookEventSatellitesTypeAsteroid NewPlanetWebhookEventSatellitesType = "asteroid"
-	NewPlanetWebhookEventSatellitesTypeComet NewPlanetWebhookEventSatellitesType = "comet"
+	NewPlanetWebhookEventSatellitesTypeComet    NewPlanetWebhookEventSatellitesType = "comet"
 )
 
 func (r NewPlanetWebhookEventSatellitesType) IsKnown() bool {
@@ -256,48 +256,48 @@ func (r NewPlanetWebhookEventSatellitesType) IsKnown() bool {
 }
 
 type ParsedWebhookEvent struct {
-	ID int64 `json:"id" api:"required"`
-	Name string `json:"name" api:"required"`
-	Description string `json:"description" api:"nullable"`
-	Type ParsedWebhookEventType `json:"type"`
+	ID          int64                  `json:"id" api:"required"`
+	Name        string                 `json:"name" api:"required"`
+	Description string                 `json:"description" api:"nullable"`
+	Type        ParsedWebhookEventType `json:"type"`
 	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex float64 `json:"habitabilityIndex"`
+	HabitabilityIndex  float64                                 `json:"habitabilityIndex"`
 	PhysicalProperties NewPlanetWebhookEventPhysicalProperties `json:"physicalProperties"`
 	// Atmospheric composition
-	Atmosphere []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
-	Image string `json:"image" api:"nullable"`
-	Satellites []NewPlanetWebhookEventSatellite `json:"satellites"`
+	Atmosphere   []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
+	DiscoveredAt time.Time                         `json:"discoveredAt" format:"date-time"`
+	Image        string                            `json:"image" api:"nullable"`
+	Satellites   []NewPlanetWebhookEventSatellite  `json:"satellites"`
 	// A user
-	Creator User `json:"creator"`
-	Tags []string `json:"tags"`
+	Creator     User      `json:"creator"`
+	Tags        []string  `json:"tags"`
 	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
 	// URL which gets invoked upon a successful operation
 	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
 	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
-	JSON parsedWebhookEventJSON `json:"-"`
+	FailureCallbackURL string                 `json:"failureCallbackUrl" format:"uri"`
+	JSON               parsedWebhookEventJSON `json:"-"`
 }
 
 // parsedWebhookEventJSON contains the JSON metadata for the struct [ParsedWebhookEvent]
 type parsedWebhookEventJSON struct {
-	ID apijson.Field
-	Name apijson.Field
-	Description apijson.Field
-	Type apijson.Field
-	HabitabilityIndex apijson.Field
+	ID                 apijson.Field
+	Name               apijson.Field
+	Description        apijson.Field
+	Type               apijson.Field
+	HabitabilityIndex  apijson.Field
 	PhysicalProperties apijson.Field
-	Atmosphere apijson.Field
-	DiscoveredAt apijson.Field
-	Image apijson.Field
-	Satellites apijson.Field
-	Creator apijson.Field
-	Tags apijson.Field
-	LastUpdated apijson.Field
+	Atmosphere         apijson.Field
+	DiscoveredAt       apijson.Field
+	Image              apijson.Field
+	Satellites         apijson.Field
+	Creator            apijson.Field
+	Tags               apijson.Field
+	LastUpdated        apijson.Field
 	SuccessCallbackURL apijson.Field
 	FailureCallbackURL apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	raw                string
+	ExtraFields        map[string]apijson.Field
 }
 
 func (r *ParsedWebhookEvent) UnmarshalJSON(data []byte) (err error) {
@@ -312,10 +312,10 @@ type ParsedWebhookEventType string
 
 const (
 	ParsedWebhookEventTypeTerrestrial ParsedWebhookEventType = "terrestrial"
-	ParsedWebhookEventTypeGasGiant ParsedWebhookEventType = "gas_giant"
-	ParsedWebhookEventTypeIceGiant ParsedWebhookEventType = "ice_giant"
-	ParsedWebhookEventTypeDwarf ParsedWebhookEventType = "dwarf"
-	ParsedWebhookEventTypeSuperEarth ParsedWebhookEventType = "super_earth"
+	ParsedWebhookEventTypeGasGiant    ParsedWebhookEventType = "gas_giant"
+	ParsedWebhookEventTypeIceGiant    ParsedWebhookEventType = "ice_giant"
+	ParsedWebhookEventTypeDwarf       ParsedWebhookEventType = "dwarf"
+	ParsedWebhookEventTypeSuperEarth  ParsedWebhookEventType = "super_earth"
 )
 
 func (r ParsedWebhookEventType) IsKnown() bool {

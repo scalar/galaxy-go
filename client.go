@@ -17,11 +17,11 @@ import (
 // interacting with the Scalar Galaxy API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options []option.RequestOption
-	Planets *PlanetService
+	Options         []option.RequestOption
+	Planets         *PlanetService
 	CelestialBodies *CelestialBodyService
-	Authentication *AuthenticationService
-	Webhooks *WebhookService
+	Authentication  *AuthenticationService
+	Webhooks        *WebhookService
 }
 
 // DefaultClientOptions read from the environment. This should be used to initialize
@@ -79,7 +79,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	return
 }
-
 
 // Execute makes a request with the given context, method, URL, request params,
 // response, and request options.

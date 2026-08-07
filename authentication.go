@@ -32,24 +32,27 @@ func NewAuthenticationService(opts ...option.RequestOption) (r *AuthenticationSe
 // Time to create a user account, eh?
 //
 // Parameters:
-//     ctx: Context for the request.
-//     body: AuthenticationNewUserParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	body: AuthenticationNewUserParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *User: User account created successfully
+//
+//	*User: User account created successfully
 //
 // Example:
 //
-//     authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
-//     	Email: sdk.F[string]("marc@scalar.com"),
-//     	Password: sdk.F[string]("i-love-scalar"),
-//     	Name: sdk.F[string]("Marc"),
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
-//     fmt.Println(authentication)
+//	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
+//		Email:    sdk.F[string]("marc@scalar.com"),
+//		Password: sdk.F[string]("i-love-scalar"),
+//		Name:     sdk.F[string]("Marc"),
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Println(authentication)
 func (r *AuthenticationService) NewUser(ctx context.Context, body AuthenticationNewUserParams, opts ...option.RequestOption) (res *User, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "user/signup"
@@ -60,25 +63,28 @@ func (r *AuthenticationService) NewUser(ctx context.Context, body Authentication
 // Yeah, this is the boring security stuff. Just get your super secret token and move on.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     body: AuthenticationNewTokenParams request parameters.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	body: AuthenticationNewTokenParams request parameters.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *AuthenticationNewTokenResponse: Token Created
+//
+//	*AuthenticationNewTokenResponse: Token Created
 //
 // Example:
 //
-//     authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
-//     	Credentials: sdk.CredentialsParam{
-//     	Email: sdk.F[string]("marc@scalar.com"),
-//     	Password: sdk.F[string]("i-love-scalar"),
-//     },
-//     })
-//     if err != nil {
-//     	panic(err)
-//     }
-//     fmt.Println(authentication)
+//	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
+//		Credentials: sdk.CredentialsParam{
+//			Email:    sdk.F[string]("marc@scalar.com"),
+//			Password: sdk.F[string]("i-love-scalar"),
+//		},
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Println(authentication)
 func (r *AuthenticationService) NewToken(ctx context.Context, body AuthenticationNewTokenParams, opts ...option.RequestOption) (res *AuthenticationNewTokenResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "auth/token"
@@ -89,19 +95,22 @@ func (r *AuthenticationService) NewToken(ctx context.Context, body Authenticatio
 // Find yourself they say. That's what you can do here.
 //
 // Parameters:
-//     ctx: Context for the request.
-//     opts: Options to apply to this request.
+//
+//	ctx: Context for the request.
+//	opts: Options to apply to this request.
 //
 // Returns:
-//     *User: Authenticated user information retrieved successfully
+//
+//	*User: Authenticated user information retrieved successfully
 //
 // Example:
 //
-//     authentication, err := client.Authentication.ListMe(context.Background())
-//     if err != nil {
-//     	panic(err)
-//     }
-//     fmt.Println(authentication)
+//	authentication, err := client.Authentication.ListMe(context.Background())
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Println(authentication)
 func (r *AuthenticationService) ListMe(ctx context.Context, opts ...option.RequestOption) (res *User, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "me"
@@ -110,15 +119,15 @@ func (r *AuthenticationService) ListMe(ctx context.Context, opts ...option.Reque
 }
 
 type User struct {
-	ID int64 `json:"id"`
-	Name string `json:"name"`
+	ID   int64    `json:"id"`
+	Name string   `json:"name"`
 	JSON userJSON `json:"-"`
 }
 
 // userJSON contains the JSON metadata for the struct [User]
 type userJSON struct {
-	ID apijson.Field
-	Name apijson.Field
+	ID          apijson.Field
+	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -140,7 +149,7 @@ func (r UserParam) MarshalJSON() (data []byte, err error) {
 }
 
 type CredentialsParam struct {
-	Email param.Field[string] `json:"email" api:"required" format:"email"`
+	Email    param.Field[string] `json:"email" api:"required" format:"email"`
 	Password param.Field[string] `json:"password" api:"required"`
 }
 
@@ -149,13 +158,13 @@ func (r CredentialsParam) MarshalJSON() (data []byte, err error) {
 }
 
 type AuthenticationNewTokenResponse struct {
-	Token string `json:"token"`
-	JSON authenticationNewTokenResponseJSON `json:"-"`
+	Token string                             `json:"token"`
+	JSON  authenticationNewTokenResponseJSON `json:"-"`
 }
 
 // authenticationNewTokenResponseJSON contains the JSON metadata for the struct [AuthenticationNewTokenResponse]
 type authenticationNewTokenResponseJSON struct {
-	Token apijson.Field
+	Token       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -169,9 +178,9 @@ func (r authenticationNewTokenResponseJSON) RawJSON() string {
 }
 
 type AuthenticationNewUserParams struct {
-	Email param.Field[string] `json:"email" api:"required" format:"email"`
+	Email    param.Field[string] `json:"email" api:"required" format:"email"`
 	Password param.Field[string] `json:"password" api:"required"`
-	Name param.Field[string] `json:"name"`
+	Name     param.Field[string] `json:"name"`
 }
 
 func (r AuthenticationNewUserParams) MarshalJSON() (data []byte, err error) {
