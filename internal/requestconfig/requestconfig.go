@@ -88,7 +88,35 @@ type PreRequestOptionFunc func(*RequestConfig) error
 func (s RequestOptionFunc) Apply(r *RequestConfig) error    { return s(r) }
 func (s PreRequestOptionFunc) Apply(r *RequestConfig) error { return s(r) }
 
+// firstDotSegment reports the first `.` or `..` segment in a request path, if any.
+//
+// These are RFC 3986 dot-segments. BaseURL.Parse below resolves the path as a reference
+// against the base, which applies remove_dot_segments and walks up — so a path param
+// carrying `..` retargets the request at a different endpoint no matter how the rest of
+// it is escaped. url.PathEscape does not encode `.`, and PathEscapeReserved deliberately
+// keeps `/`, so neither escaper stops this on its own.
+//
+// The query and fragment are excluded: only the path participates in dot-segment removal,
+// and a `..` inside a query value is an ordinary character.
+func firstDotSegment(path string) (string, bool) {
+	if index := strings.IndexAny(path, "?#"); index >= 0 {
+		path = path[:index]
+	}
+	for _, segment := range strings.Split(path, "/") {
+		if segment == "." || segment == ".." {
+			return segment, true
+		}
+	}
+	return "", false
+}
+
 func NewRequestConfig(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) (*RequestConfig, error) {
+	// Reject before any request state is built: a dot-segment cannot be escaped into safety,
+	// so the only correct handling is to refuse the call rather than send it somewhere else.
+	if segment, found := firstDotSegment(u); found {
+		return nil, fmt.Errorf("path %q contains a %q segment, which would resolve to a different path", u, segment)
+	}
+
 	var reader io.Reader
 
 	contentType := "application/json"
@@ -577,6 +605,24 @@ func (cfg *RequestConfig) Execute() (err error) {
 	}
 
 	return nil
+}
+
+// PathEscapeReserved percent-encodes a path parameter while leaving `/` intact,
+// implementing RFC 6570 reserved expansion (`{+var}`) for parameters the OpenAPI
+// document flags with `allowReserved` — typically a file path or object key.
+//
+// The slash is part of the route shape for these values: `docs/example.txt` must
+// stay nested under `.../files/docs/example.txt` rather than collapsing into a
+// single `docs%2Fexample.txt` segment that addresses a different backend path.
+// Every `/`-separated segment still goes through url.PathEscape, so all other
+// URL-significant characters are encoded by exactly the same rules as a plain
+// path param and a reserved value cannot smuggle in `?` or `#`.
+func PathEscapeReserved(value string) string {
+	segments := strings.Split(value, "/")
+	for i, segment := range segments {
+		segments[i] = url.PathEscape(segment)
+	}
+	return strings.Join(segments, "/")
 }
 
 func ExecuteNewRequest(ctx context.Context, method string, u string, body interface{}, dst interface{}, opts ...RequestOption) error {
