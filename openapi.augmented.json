@@ -16,7 +16,7 @@
     "x-scalar-sdk-installation": [
       {
         "lang": "TypeScript",
-        "description": "```sh\nnpm install @scalar/galaxy\n```"
+        "description": "```sh\nnpm install @scalar/galaxy-node\n```"
       },
       {
         "lang": "Python",
@@ -173,7 +173,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst listAllData = await client.planets.listAllData({\n  limit: 10,\n  offset: 0,\n});\n\nconsole.log(listAllData);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst listAllData = await client.planets.listAllData({\n  limit: 10,\n  offset: 0,\n});\n\nconsole.log(listAllData);"
           },
           {
             "lang": "Python",
@@ -319,7 +319,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.create();\n\nconsole.log(planet);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.create();\n\nconsole.log(planet);"
           },
           {
             "lang": "Python",
@@ -387,7 +387,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.retrieve(1);\n\nconsole.log(planet);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.retrieve(1);\n\nconsole.log(planet);"
           },
           {
             "lang": "Python",
@@ -459,7 +459,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.update(1);\n\nconsole.log(planet);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst planet = await client.planets.update(1);\n\nconsole.log(planet);"
           },
           {
             "lang": "Python",
@@ -499,7 +499,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nawait client.planets.delete(1);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nawait client.planets.delete(1);"
           },
           {
             "lang": "Python",
@@ -567,7 +567,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst uploadImage = await client.planets.uploadImage(1);\n\nconsole.log(uploadImage);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst uploadImage = await client.planets.uploadImage(1);\n\nconsole.log(uploadImage);"
           },
           {
             "lang": "Python",
@@ -618,7 +618,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst celestialBody = await client.celestialBodies.create({\n  name: 'Mars',\n});\n\nconsole.log(celestialBody);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst celestialBody = await client.celestialBodies.create({\n  name: 'Mars',\n});\n\nconsole.log(celestialBody);"
           },
           {
             "lang": "Python",
@@ -765,7 +765,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst user = await client.authentication.createUser();\n\nconsole.log(user);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst user = await client.authentication.createUser();\n\nconsole.log(user);"
           },
           {
             "lang": "Python",
@@ -852,7 +852,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst createToken = await client.authentication.createToken();\n\nconsole.log(createToken);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst createToken = await client.authentication.createToken();\n\nconsole.log(createToken);"
           },
           {
             "lang": "Python",
@@ -940,7 +940,7 @@
           {
             "lang": "TypeScript",
             "label": "TypeScript",
-            "source": "import Galaxy from '@scalar/galaxy';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst user = await client.authentication.listMe();\n\nconsole.log(user);"
+            "source": "import Galaxy from '@scalar/galaxy-node';\n\nconst client = new Galaxy({\n  bearerAuth: process.env['BEARER_AUTH'], // defaults to the BEARER_AUTH env var\n  environment: 'production',\n});\n\nconst user = await client.authentication.listMe();\n\nconsole.log(user);"
           },
           {
             "lang": "Python",
