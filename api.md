@@ -33,6 +33,8 @@ client := sdk.NewClient()
 
 ## `Planets`
 
+Everything about planets
+
 ### Get all planets
 
 It's easy to say you know them all, but do you really? Retrieve all the planets and check whether you missed one.
@@ -146,6 +148,8 @@ fmt.Println(planet)
 
 ## `CelestialBodies`
 
+Celestial bodies are the planets and satellites in the Scalar Galaxy.
+
 ### Create a celestial body
 
 Stars, moons, comets, the occasional rogue asteroid — if it glows or drifts through the void, you can add it here.
@@ -169,6 +173,8 @@ fmt.Println(celestialBody)
 ```
 
 ## `Authentication`
+
+Some endpoints are public, but some require authentication. We provide all the required endpoints to create an account and authorize yourself.
 
 ### Create a user
 
