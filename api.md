@@ -134,11 +134,11 @@ Got a crazy good photo of a planet? Share it with the world!
 
 | Direction | Type |
 | --- | --- |
-| Request | [`PlanetUploadImageParams`](./planet.go) |
-| Response | [`PlanetUploadImageResponse`](./planet.go) |
+| Request | [`PlanetDelteImageParams`](./planet.go) |
+| Response | [`PlanetDelteImageResponse`](./planet.go) |
 
 ```go
-planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
+planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
 if err != nil {
 	panic(err)
 }

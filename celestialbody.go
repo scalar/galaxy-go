@@ -140,6 +140,19 @@ func (r CelestialBody) AsUnion() CelestialBodyUnion {
 	return r.union
 }
 
+// Satisfied by [PlanetParam], [CelestialBodySatelliteParam], [CelestialBodyParam].
+type CelestialBodyUnionParam interface {
+	implementsCelestialBodyUnionParam()
+}
+
+func (r PlanetParam) implementsCelestialBodyUnionParam() {}
+
+func (r CelestialBodySatelliteParam) implementsCelestialBodyUnionParam() {}
+
+type CelestialBodyUnion interface {
+	implementsCelestialBody()
+}
+
 func init() {
 	apijson.RegisterUnion(
 		reflect.TypeOf((*CelestialBodyUnion)(nil)).Elem(),
@@ -156,54 +169,6 @@ func init() {
 		},
 	)
 }
-
-func (r Planet) implementsCelestialBody() {}
-
-// Satisfied by [PlanetParam], [CelestialBodySatelliteParam], [CelestialBodyParam].
-type CelestialBodyUnionParam interface {
-	implementsCelestialBodyUnionParam()
-}
-
-func (r PlanetParam) implementsCelestialBodyUnionParam() {}
-
-func (r CelestialBodySatelliteParam) implementsCelestialBodyUnionParam() {}
-
-type CelestialBodyUnion interface {
-	implementsCelestialBody()
-}
-
-type CelestialBodySatellite struct {
-	Name        string `json:"name" api:"required"`
-	ID          int64  `json:"id"`
-	Description string `json:"description" api:"nullable"`
-	// Diameter in kilometers
-	Diameter float64                    `json:"diameter"`
-	Type     CelestialBodySatelliteType `json:"type"`
-	Orbit    interface{}                `json:"orbit"`
-	JSON     celestialBodySatelliteJSON `json:"-"`
-}
-
-// celestialBodySatelliteJSON contains the JSON metadata for the struct [CelestialBodySatellite]
-type celestialBodySatelliteJSON struct {
-	Name        apijson.Field
-	ID          apijson.Field
-	Description apijson.Field
-	Diameter    apijson.Field
-	Type        apijson.Field
-	Orbit       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *CelestialBodySatellite) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r celestialBodySatelliteJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r CelestialBodySatellite) implementsCelestialBody() {}
 
 type CelestialBodyType string
 
@@ -262,6 +227,41 @@ type CelestialBodySatelliteParam struct {
 func (r CelestialBodySatelliteParam) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
+
+func (r Planet) implementsCelestialBody() {}
+
+type CelestialBodySatellite struct {
+	Name        string `json:"name" api:"required"`
+	ID          int64  `json:"id"`
+	Description string `json:"description" api:"nullable"`
+	// Diameter in kilometers
+	Diameter float64                    `json:"diameter"`
+	Type     CelestialBodySatelliteType `json:"type"`
+	Orbit    interface{}                `json:"orbit"`
+	JSON     celestialBodySatelliteJSON `json:"-"`
+}
+
+// celestialBodySatelliteJSON contains the JSON metadata for the struct [CelestialBodySatellite]
+type celestialBodySatelliteJSON struct {
+	Name        apijson.Field
+	ID          apijson.Field
+	Description apijson.Field
+	Diameter    apijson.Field
+	Type        apijson.Field
+	Orbit       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CelestialBodySatellite) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r celestialBodySatelliteJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r CelestialBodySatellite) implementsCelestialBody() {}
 
 type CelestialBodySatelliteType string
 

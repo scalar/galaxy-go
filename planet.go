@@ -189,22 +189,22 @@ func (r *PlanetService) Delete(ctx context.Context, planetID int64, opts ...opti
 //
 //	ctx: Context for the request.
 //	planetID: The ID of the planet to get
-//	body: PlanetUploadImageParams request parameters.
+//	body: PlanetDelteImageParams request parameters.
 //	opts: Options to apply to this request.
 //
 // Returns:
 //
-//	*PlanetUploadImageResponse: Image uploaded
+//	*PlanetDelteImageResponse: Image uploaded
 //
 // Example:
 //
-//	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
+//	planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
 //	if err != nil {
 //		panic(err)
 //	}
 //
 //	fmt.Println(planet)
-func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body PlanetUploadImageParams, opts ...option.RequestOption) (res *PlanetUploadImageResponse, err error) {
+func (r *PlanetService) DelteImage(ctx context.Context, planetID int64, body PlanetDelteImageParams, opts ...option.RequestOption) (res *PlanetDelteImageResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := fmt.Sprintf("planets/%v/image", planetID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -420,12 +420,12 @@ func (r PlanetUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r.Planet)
 }
 
-type PlanetUploadImageParams struct {
+type PlanetDelteImageParams struct {
 	// The image file to upload
 	Image param.Field[io.Reader] `json:"image" format:"binary"`
 }
 
-func (r PlanetUploadImageParams) MarshalMultipart() (data []byte, contentType string, err error) {
+func (r PlanetDelteImageParams) MarshalMultipart() (data []byte, contentType string, err error) {
 	buf := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(buf)
 	err = apiform.MarshalRoot(r, writer)
@@ -489,7 +489,7 @@ func (r planetListAllDataResponseMetaJSON) RawJSON() string {
 	return r.raw
 }
 
-type PlanetUploadImageResponse struct {
+type PlanetDelteImageResponse struct {
 	Message string `json:"message"`
 	// The URL where the uploaded image can be accessed
 	ImageURL string `json:"imageUrl"`
@@ -498,12 +498,12 @@ type PlanetUploadImageResponse struct {
 	// Size of the uploaded image in bytes
 	FileSize int64 `json:"fileSize"`
 	// The content type of the uploaded image
-	MimeType string                        `json:"mimeType"`
-	JSON     planetUploadImageResponseJSON `json:"-"`
+	MimeType string                       `json:"mimeType"`
+	JSON     planetDelteImageResponseJSON `json:"-"`
 }
 
-// planetUploadImageResponseJSON contains the JSON metadata for the struct [PlanetUploadImageResponse]
-type planetUploadImageResponseJSON struct {
+// planetDelteImageResponseJSON contains the JSON metadata for the struct [PlanetDelteImageResponse]
+type planetDelteImageResponseJSON struct {
 	Message     apijson.Field
 	ImageURL    apijson.Field
 	UploadedAt  apijson.Field
@@ -513,11 +513,11 @@ type planetUploadImageResponseJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PlanetUploadImageResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *PlanetDelteImageResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r planetUploadImageResponseJSON) RawJSON() string {
+func (r planetDelteImageResponseJSON) RawJSON() string {
 	return r.raw
 }
 
