@@ -74,6 +74,9 @@ Non-success responses return generated API errors. Error objects expose status, 
 
 ```go
 planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+	Limit:  sdk.F[int64](10),
+	Offset: sdk.F[int64](0),
+})
 if err != nil {
 	var apiErr *sdk.Error
 	if errors.As(err, &apiErr) {
@@ -82,7 +85,7 @@ if err != nil {
 	panic(err)
 }
 
-// imports: sdk "github.com/scalar/galaxy-go", "errors", "fmt"
+// imports: "context", "errors", "fmt", sdk "github.com/scalar/galaxy-go"
 ```
 
 ## Requirements
