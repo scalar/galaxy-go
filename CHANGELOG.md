@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.3.0](https://github.com/scalar/galaxy-go/compare/v0.2.1...v0.3.0) (2026-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** Removed environment `responds_with_your_request_data`.
+* **api:** 3 breaking changes to the SDK surface.
+    - Removed operation `planets.uploadImage` (`POST /planets/{planetId}/image`).
+    - Removed schema `UploadImageResponseHeaders`.
+    - Removed schema `UploadImageStatus400ResponseHeaders`.
+
+### Features
+
+* **api:** remove operation planets.uploadImage (+6 more changes) ([48b96ab](https://github.com/scalar/galaxy-go/commit/48b96abab18870ff0bc80fd3fbbd6255b635528e))
+* **api:** update SDK surface (2 changes) ([e7e05c8](https://github.com/scalar/galaxy-go/commit/e7e05c892bcf050118a31507999fdbaf48e41f85))
+
+
+### Chores
+
+* **api:** regenerate SDK ([e3fb687](https://github.com/scalar/galaxy-go/commit/e3fb68753279bd8e4c331f0761c4f5170ecfc014))
+* **api:** regenerate SDK ([13771c6](https://github.com/scalar/galaxy-go/commit/13771c64cd7168c537ed7e3a461c7cc180d1171a))
+* **api:** regenerate SDK ([47f0408](https://github.com/scalar/galaxy-go/commit/47f0408ceef2dbcbb4c00f817a25867a53b3d09a))
+* **api:** update generated SDK content ([625e9aa](https://github.com/scalar/galaxy-go/commit/625e9aac3905bc0484640b03f89d29df10e60888))
+* **api:** update generated SDK content ([803426e](https://github.com/scalar/galaxy-go/commit/803426e0af17fc2adc33c268d78294c108cf10c0))
+
 ## [0.2.1](https://github.com/scalar/galaxy-go/compare/v0.2.0...v0.2.1) (2026-08-07)
 
 
