@@ -98,6 +98,9 @@ Non-success responses return generated API errors. Error objects expose status, 
 
 ```go
 planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+	Limit:  sdk.F[int64](10),
+	Offset: sdk.F[int64](0),
+})
 if err != nil {
 	var apiErr *sdk.Error
 	if errors.As(err, &apiErr) {
@@ -106,7 +109,7 @@ if err != nil {
 	panic(err)
 }
 
-// imports: sdk "github.com/scalar/galaxy-go", "errors", "fmt"
+// imports: "context", "errors", "fmt", sdk "github.com/scalar/galaxy-go"
 ```
 
 Documented error statuses: `400`, `401`, `403`, `404`, `409`, `422`, `429`.
@@ -136,7 +139,7 @@ client := sdk.NewClient(
 | `option.WithAPIKeyQuery` | `func(string) option.RequestOption` | `os.Getenv("API_KEY_QUERY")` | API key query parameter |
 | `option.WithAPIKeyCookie` | `func(string) option.RequestOption` | `os.Getenv("API_KEY_COOKIE")` | API key browser cookie |
 | `option.WithEnvironmentProduction` | `func() option.RequestOption` | - | Select the production API environment. |
-| `option.WithEnvironmentRespondsWithYourRequestData` | `func() option.RequestOption` | - | Select the responds_with_your_request_data API environment. |
+| `option.WithEnvironmentVoid` | `func() option.RequestOption` | - | Select the void API environment. |
 | `option.WithBaseURL` | `func(string) option.RequestOption` | `os.Getenv("SCALAR_BASE_URL")` | Override the default API base URL. |
 | `option.WithRequestTimeout` | `func(time.Duration) option.RequestOption` | - | Maximum time to wait for each request attempt. |
 | `option.WithMaxRetries` | `func(int) option.RequestOption` | `2` | Number of retries for temporary failures. |

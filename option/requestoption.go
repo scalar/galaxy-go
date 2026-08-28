@@ -269,9 +269,9 @@ func WithEnvironmentProduction() RequestOption {
 	return requestconfig.WithDefaultBaseURL("https://galaxy.scalar.com/")
 }
 
-// WithEnvironmentRespondsWithYourRequestData sets the default base URL to the "respondswithyourrequestdata" environment.
-func WithEnvironmentRespondsWithYourRequestData() RequestOption {
-	return requestconfig.WithDefaultBaseURL("{protocol}://void.scalar.com/{path}/")
+// WithEnvironmentVoid sets the default base URL to the "void" environment.
+func WithEnvironmentVoid() RequestOption {
+	return requestconfig.WithDefaultBaseURL("https://void.scalar.com/")
 }
 
 // WithBearerAuth returns a RequestOption that sets the client setting "bearerAuth".

@@ -33,6 +33,8 @@ client := sdk.NewClient()
 
 ## `Planets`
 
+Everything about planets
+
 ### Get all planets
 
 It's easy to say you know them all, but do you really? Retrieve all the planets and check whether you missed one.
@@ -132,11 +134,11 @@ Got a crazy good photo of a planet? Share it with the world!
 
 | Direction | Type |
 | --- | --- |
-| Request | [`PlanetUploadImageParams`](./planet.go) |
-| Response | [`PlanetUploadImageResponse`](./planet.go) |
+| Request | [`PlanetDelteImageParams`](./planet.go) |
+| Response | [`PlanetDelteImageResponse`](./planet.go) |
 
 ```go
-planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
+planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
 if err != nil {
 	panic(err)
 }
@@ -145,6 +147,8 @@ fmt.Println(planet)
 ```
 
 ## `CelestialBodies`
+
+Celestial bodies are the planets and satellites in the Scalar Galaxy.
 
 ### Create a celestial body
 
@@ -169,6 +173,8 @@ fmt.Println(celestialBody)
 ```
 
 ## `Authentication`
+
+Some endpoints are public, but some require authentication. We provide all the required endpoints to create an account and authorize yourself.
 
 ### Create a user
 
