@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.3.1](https://github.com/scalar/galaxy-go/compare/v0.3.0...v0.3.1) (2026-09-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** 3 breaking changes to the SDK surface.
+    - Property `planet.habitabilityIndex` type changed from `number<float>` to `number<float>`.
+    - Property `planet.physicalProperties` type changed from `object` to `object`.
+    - Property `planet.atmosphere` type changed from `Array<object>` to `Array<object>`.
+
+### Features
+
+* **api:** update property planet.habitabilityIndex (+3 more changes) ([044ecb6](https://github.com/scalar/galaxy-go/commit/044ecb6f584778e7c9d39b9381047cb16ae09454))
+
+
+### Chores
+
+* **api:** regenerate SDK ([99fac39](https://github.com/scalar/galaxy-go/commit/99fac3956ffe140fb1ab3ef80988d43f5b6f9f86))
+* **api:** regenerate SDK ([589c61f](https://github.com/scalar/galaxy-go/commit/589c61f78f7c2d0f8b30f3bc8c8288c48412c7b8))
+* **api:** update generated SDK content ([a5d5a66](https://github.com/scalar/galaxy-go/commit/a5d5a6647b484e2ddbabf0a05a069a9e8de1f6ed))
+* release 0.3.1 ([f81ddcd](https://github.com/scalar/galaxy-go/commit/f81ddcd1b5eed2489bed062795cbb41952401df5))
+* release 0.3.1 ([ebf5d18](https://github.com/scalar/galaxy-go/commit/ebf5d1858621b4a817bbf9018c60d50a7c49d0dd))
+
 ## [0.3.0](https://github.com/scalar/galaxy-go/compare/v0.2.1...v0.3.0) (2026-08-28)
 
 
