@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.3.1](https://github.com/scalar/galaxy-go/compare/v0.3.1...v0.3.1) (2026-09-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* 3 breaking changes to the SDK surface.
+    - Removed operation `planets.uploadImage` (`POST /planets/{planetId}/image`).
+    - Removed schema `UploadImageResponseHeaders`.
+    - Removed schema `UploadImageStatus400ResponseHeaders`.
+* **api:** 3 breaking changes to the SDK surface.
+    - Property `planet.habitabilityIndex` type changed from `number<float>` to `number<float>`.
+    - Property `planet.physicalProperties` type changed from `object` to `object`.
+    - Property `planet.atmosphere` type changed from `Array<object>` to `Array<object>`.
+* 3 breaking changes to the SDK surface.
+    - Removed operation `planets.uploadImage` (`POST /planets/{planetId}/image`).
+    - Removed schema `UploadImageResponseHeaders`.
+    - Removed schema `UploadImageStatus400ResponseHeaders`.
+* **api:** Removed environment `responds_with_your_request_data`.
+* **api:** 3 breaking changes to the SDK surface.
+    - Removed operation `planets.uploadImage` (`POST /planets/{planetId}/image`).
+    - Removed schema `UploadImageResponseHeaders`.
+    - Removed schema `UploadImageStatus400ResponseHeaders`.
+
+### release
+
+* 0.3.0 ([#3](https://github.com/scalar/galaxy-go/issues/3)) ([e29f95e](https://github.com/scalar/galaxy-go/commit/e29f95ef6b32d29a1fdd96dc98bb6d54de4292f2))
+* 0.3.1 ([#4](https://github.com/scalar/galaxy-go/issues/4)) ([fab33d8](https://github.com/scalar/galaxy-go/commit/fab33d84be55a71270fa0f50c1c66022d22a5a16))
+
+
+### Features
+
+* **api:** initial SDK generation ([4c25742](https://github.com/scalar/galaxy-go/commit/4c2574274764a884a715cf65562e4f4614cab3f5))
+* **api:** remove operation planets.uploadImage (+6 more changes) ([48b96ab](https://github.com/scalar/galaxy-go/commit/48b96abab18870ff0bc80fd3fbbd6255b635528e))
+* **api:** update property planet.habitabilityIndex (+3 more changes) ([044ecb6](https://github.com/scalar/galaxy-go/commit/044ecb6f584778e7c9d39b9381047cb16ae09454))
+* **api:** update SDK surface (2 changes) ([e7e05c8](https://github.com/scalar/galaxy-go/commit/e7e05c892bcf050118a31507999fdbaf48e41f85))
+
+
+### Chores
+
+* **api:** regenerate SDK ([99fac39](https://github.com/scalar/galaxy-go/commit/99fac3956ffe140fb1ab3ef80988d43f5b6f9f86))
+* **api:** regenerate SDK ([589c61f](https://github.com/scalar/galaxy-go/commit/589c61f78f7c2d0f8b30f3bc8c8288c48412c7b8))
+* **api:** regenerate SDK ([e3fb687](https://github.com/scalar/galaxy-go/commit/e3fb68753279bd8e4c331f0761c4f5170ecfc014))
+* **api:** regenerate SDK ([13771c6](https://github.com/scalar/galaxy-go/commit/13771c64cd7168c537ed7e3a461c7cc180d1171a))
+* **api:** regenerate SDK ([47f0408](https://github.com/scalar/galaxy-go/commit/47f0408ceef2dbcbb4c00f817a25867a53b3d09a))
+* **api:** regenerate SDK ([858d888](https://github.com/scalar/galaxy-go/commit/858d88838107f24bb68682ff5afbb801f28da37c))
+* **api:** regenerate SDK ([9959e30](https://github.com/scalar/galaxy-go/commit/9959e30ec19a34929eac9b7f665fd73cf46ff5af))
+* **api:** update generated SDK content ([a5d5a66](https://github.com/scalar/galaxy-go/commit/a5d5a6647b484e2ddbabf0a05a069a9e8de1f6ed))
+* **api:** update generated SDK content ([625e9aa](https://github.com/scalar/galaxy-go/commit/625e9aac3905bc0484640b03f89d29df10e60888))
+* **api:** update generated SDK content ([803426e](https://github.com/scalar/galaxy-go/commit/803426e0af17fc2adc33c268d78294c108cf10c0))
+* **api:** update generated SDK content ([0433501](https://github.com/scalar/galaxy-go/commit/043350159c56f73d6aa87f9a3cb5a4de349a96b1))
+* release 0.3.1 ([f81ddcd](https://github.com/scalar/galaxy-go/commit/f81ddcd1b5eed2489bed062795cbb41952401df5))
+* release 0.3.1 ([ebf5d18](https://github.com/scalar/galaxy-go/commit/ebf5d1858621b4a817bbf9018c60d50a7c49d0dd))
+
 ## [0.3.1](https://github.com/scalar/galaxy-go/compare/v0.3.0...v0.3.1) (2026-09-15)
 
 
