@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -71,13 +72,14 @@ func _smokeCase2() {
 		Planet: sdk.PlanetParam{
 			Name:               sdk.F[string]("Mars"),
 			Description:        sdk.F[string]("The red planet"),
+			Type:               sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
 			HabitabilityIndex:  sdk.F[float64](0.68),
 			PhysicalProperties: sdk.F[sdk.PlanetPhysicalPropertiesParam](sdk.PlanetPhysicalPropertiesParam{}),
 			Atmosphere:         sdk.F[[]sdk.PlanetAtmosphereParam]([]sdk.PlanetAtmosphereParam{sdk.PlanetAtmosphereParam{}}),
 			DiscoveredAt:       sdk.F[time.Time](time.Now()),
 			Image:              sdk.F[string]("https://cdn.scalar.com/photos/mars.jpg"),
 			Creator:            sdk.F[sdk.UserParam](sdk.UserParam{}),
-			Tags:               sdk.F[[]string]([]string{""}),
+			Tags:               sdk.F[[]string]([]string{"solar-system", "rocky", "explored"}),
 			SuccessCallbackURL: sdk.F[string]("https://example.com/webhook"),
 			FailureCallbackURL: sdk.F[string]("https://example.com/webhook"),
 		},
@@ -116,13 +118,14 @@ func _smokeCase5() {
 		Planet: sdk.PlanetParam{
 			Name:               sdk.F[string]("Mars"),
 			Description:        sdk.F[string]("The red planet"),
+			Type:               sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
 			HabitabilityIndex:  sdk.F[float64](0.68),
 			PhysicalProperties: sdk.F[sdk.PlanetPhysicalPropertiesParam](sdk.PlanetPhysicalPropertiesParam{}),
 			Atmosphere:         sdk.F[[]sdk.PlanetAtmosphereParam]([]sdk.PlanetAtmosphereParam{sdk.PlanetAtmosphereParam{}}),
 			DiscoveredAt:       sdk.F[time.Time](time.Now()),
 			Image:              sdk.F[string]("https://cdn.scalar.com/photos/mars.jpg"),
 			Creator:            sdk.F[sdk.UserParam](sdk.UserParam{}),
-			Tags:               sdk.F[[]string]([]string{""}),
+			Tags:               sdk.F[[]string]([]string{"solar-system", "rocky", "explored"}),
 			SuccessCallbackURL: sdk.F[string]("https://example.com/webhook"),
 			FailureCallbackURL: sdk.F[string]("https://example.com/webhook"),
 		},
@@ -331,6 +334,20 @@ func selectedCases() []smokeCase {
 	return selected
 }
 
+// How many cases run at once. A large SDK has hundreds of operations, and one goroutine per case
+// puts more requests in flight than the client's transport pools connections for. SCALAR_SMOKE_CONCURRENCY
+// overrides the cap; anything unparseable falls back to the default.
+func smokeConcurrency(caseCount int) int {
+	limit := 32
+	if override, err := strconv.Atoi(os.Getenv("SCALAR_SMOKE_CONCURRENCY")); err == nil && override > 0 {
+		limit = override
+	}
+	if caseCount < limit {
+		return caseCount
+	}
+	return limit
+}
+
 func runCase(testCase smokeCase) (result smokeResult) {
 	startedAt := time.Now()
 	result = smokeResult{
@@ -355,10 +372,15 @@ func main() {
 	selected := selectedCases()
 	results := make([]smokeResult, len(selected))
 	var wg sync.WaitGroup
+	// Buffered channel as a counting semaphore: every goroutine still starts, but only
+	// smokeConcurrency of them hold a slot — and so have a request in flight — at a time.
+	semaphore := make(chan struct{}, smokeConcurrency(len(selected)))
 	for index, testCase := range selected {
 		wg.Add(1)
 		go func(index int, testCase smokeCase) {
 			defer wg.Done()
+			semaphore <- struct{}{}
+			defer func() { <-semaphore }()
 			results[index] = runCase(testCase)
 		}(index, testCase)
 	}
