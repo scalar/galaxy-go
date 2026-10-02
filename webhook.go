@@ -60,26 +60,26 @@ func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...opt
 }
 
 type NewPlanetWebhookEvent struct {
-	ID          int64                     `json:"id" api:"required"`
-	Name        string                    `json:"name" api:"required"`
-	Description string                    `json:"description" api:"nullable"`
-	Type        NewPlanetWebhookEventType `json:"type"`
+	ID   int64  `json:"id" api:"required"`
+	Name string `json:"name" api:"required"`
+	// Atmospheric composition
+	Atmosphere []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
+	// A user
+	Creator      User      `json:"creator"`
+	Description  string    `json:"description" api:"nullable"`
+	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
+	// URL which gets invoked upon a failed operation
+	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
 	// A score from 0 to 1 indicating potential habitability
 	HabitabilityIndex  float64                                 `json:"habitabilityIndex"`
+	Image              string                                  `json:"image" api:"nullable"`
+	LastUpdated        time.Time                               `json:"lastUpdated" format:"date-time"`
 	PhysicalProperties NewPlanetWebhookEventPhysicalProperties `json:"physicalProperties"`
-	// Atmospheric composition
-	Atmosphere   []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time                         `json:"discoveredAt" format:"date-time"`
-	Image        string                            `json:"image" api:"nullable"`
-	Satellites   []NewPlanetWebhookEventSatellite  `json:"satellites"`
-	// A user
-	Creator     User      `json:"creator"`
-	Tags        []string  `json:"tags"`
-	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
+	Satellites         []NewPlanetWebhookEventSatellite        `json:"satellites"`
 	// URL which gets invoked upon a successful operation
-	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
-	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string                    `json:"failureCallbackUrl" format:"uri"`
+	SuccessCallbackURL string                    `json:"successCallbackUrl" format:"uri"`
+	Tags               []string                  `json:"tags"`
+	Type               NewPlanetWebhookEventType `json:"type"`
 	JSON               newPlanetWebhookEventJSON `json:"-"`
 }
 
@@ -87,19 +87,19 @@ type NewPlanetWebhookEvent struct {
 type newPlanetWebhookEventJSON struct {
 	ID                 apijson.Field
 	Name               apijson.Field
-	Description        apijson.Field
-	Type               apijson.Field
-	HabitabilityIndex  apijson.Field
-	PhysicalProperties apijson.Field
 	Atmosphere         apijson.Field
-	DiscoveredAt       apijson.Field
-	Image              apijson.Field
-	Satellites         apijson.Field
 	Creator            apijson.Field
-	Tags               apijson.Field
-	LastUpdated        apijson.Field
-	SuccessCallbackURL apijson.Field
+	Description        apijson.Field
+	DiscoveredAt       apijson.Field
 	FailureCallbackURL apijson.Field
+	HabitabilityIndex  apijson.Field
+	Image              apijson.Field
+	LastUpdated        apijson.Field
+	PhysicalProperties apijson.Field
+	Satellites         apijson.Field
+	SuccessCallbackURL apijson.Field
+	Tags               apijson.Field
+	Type               apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -131,21 +131,21 @@ func (r NewPlanetWebhookEventType) IsKnown() bool {
 }
 
 type NewPlanetWebhookEventPhysicalProperties struct {
+	// Surface gravity in Earth g
+	Gravity float64 `json:"gravity"`
 	// Mass in Earth masses (must be greater than 0)
 	Mass float64 `json:"mass"`
 	// Radius in Earth radii (must be greater than 0)
-	Radius float64 `json:"radius"`
-	// Surface gravity in Earth g
-	Gravity     float64                                            `json:"gravity"`
+	Radius      float64                                            `json:"radius"`
 	Temperature NewPlanetWebhookEventPhysicalPropertiesTemperature `json:"temperature"`
 	JSON        newPlanetWebhookEventPhysicalPropertiesJSON        `json:"-"`
 }
 
 // newPlanetWebhookEventPhysicalPropertiesJSON contains the JSON metadata for the struct [NewPlanetWebhookEventPhysicalProperties]
 type newPlanetWebhookEventPhysicalPropertiesJSON struct {
+	Gravity     apijson.Field
 	Mass        apijson.Field
 	Radius      apijson.Field
-	Gravity     apijson.Field
 	Temperature apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -160,20 +160,20 @@ func (r newPlanetWebhookEventPhysicalPropertiesJSON) RawJSON() string {
 }
 
 type NewPlanetWebhookEventPhysicalPropertiesTemperature struct {
-	// Minimum temperature in Kelvin
-	Min float64 `json:"min"`
+	// Average temperature in Kelvin
+	Average float64 `json:"average"`
 	// Maximum temperature in Kelvin
 	Max float64 `json:"max"`
-	// Average temperature in Kelvin
-	Average float64                                                `json:"average"`
-	JSON    newPlanetWebhookEventPhysicalPropertiesTemperatureJSON `json:"-"`
+	// Minimum temperature in Kelvin
+	Min  float64                                                `json:"min"`
+	JSON newPlanetWebhookEventPhysicalPropertiesTemperatureJSON `json:"-"`
 }
 
 // newPlanetWebhookEventPhysicalPropertiesTemperatureJSON contains the JSON metadata for the struct [NewPlanetWebhookEventPhysicalPropertiesTemperature]
 type newPlanetWebhookEventPhysicalPropertiesTemperatureJSON struct {
-	Min         apijson.Field
-	Max         apijson.Field
 	Average     apijson.Field
+	Max         apijson.Field
+	Min         apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -214,8 +214,8 @@ type NewPlanetWebhookEventSatellite struct {
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
 	Diameter float64                             `json:"diameter"`
-	Type     NewPlanetWebhookEventSatellitesType `json:"type"`
 	Orbit    interface{}                         `json:"orbit"`
+	Type     NewPlanetWebhookEventSatellitesType `json:"type"`
 	JSON     newPlanetWebhookEventSatelliteJSON  `json:"-"`
 }
 
@@ -225,8 +225,8 @@ type newPlanetWebhookEventSatelliteJSON struct {
 	ID          apijson.Field
 	Description apijson.Field
 	Diameter    apijson.Field
-	Type        apijson.Field
 	Orbit       apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -256,26 +256,26 @@ func (r NewPlanetWebhookEventSatellitesType) IsKnown() bool {
 }
 
 type ParsedWebhookEvent struct {
-	ID          int64                  `json:"id" api:"required"`
-	Name        string                 `json:"name" api:"required"`
-	Description string                 `json:"description" api:"nullable"`
-	Type        ParsedWebhookEventType `json:"type"`
+	ID   int64  `json:"id" api:"required"`
+	Name string `json:"name" api:"required"`
+	// Atmospheric composition
+	Atmosphere []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
+	// A user
+	Creator      User      `json:"creator"`
+	Description  string    `json:"description" api:"nullable"`
+	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
+	// URL which gets invoked upon a failed operation
+	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
 	// A score from 0 to 1 indicating potential habitability
 	HabitabilityIndex  float64                                 `json:"habitabilityIndex"`
+	Image              string                                  `json:"image" api:"nullable"`
+	LastUpdated        time.Time                               `json:"lastUpdated" format:"date-time"`
 	PhysicalProperties NewPlanetWebhookEventPhysicalProperties `json:"physicalProperties"`
-	// Atmospheric composition
-	Atmosphere   []NewPlanetWebhookEventAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time                         `json:"discoveredAt" format:"date-time"`
-	Image        string                            `json:"image" api:"nullable"`
-	Satellites   []NewPlanetWebhookEventSatellite  `json:"satellites"`
-	// A user
-	Creator     User      `json:"creator"`
-	Tags        []string  `json:"tags"`
-	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
+	Satellites         []NewPlanetWebhookEventSatellite        `json:"satellites"`
 	// URL which gets invoked upon a successful operation
-	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
-	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string                 `json:"failureCallbackUrl" format:"uri"`
+	SuccessCallbackURL string                 `json:"successCallbackUrl" format:"uri"`
+	Tags               []string               `json:"tags"`
+	Type               ParsedWebhookEventType `json:"type"`
 	JSON               parsedWebhookEventJSON `json:"-"`
 }
 
@@ -283,19 +283,19 @@ type ParsedWebhookEvent struct {
 type parsedWebhookEventJSON struct {
 	ID                 apijson.Field
 	Name               apijson.Field
-	Description        apijson.Field
-	Type               apijson.Field
-	HabitabilityIndex  apijson.Field
-	PhysicalProperties apijson.Field
 	Atmosphere         apijson.Field
-	DiscoveredAt       apijson.Field
-	Image              apijson.Field
-	Satellites         apijson.Field
 	Creator            apijson.Field
-	Tags               apijson.Field
-	LastUpdated        apijson.Field
-	SuccessCallbackURL apijson.Field
+	Description        apijson.Field
+	DiscoveredAt       apijson.Field
 	FailureCallbackURL apijson.Field
+	HabitabilityIndex  apijson.Field
+	Image              apijson.Field
+	LastUpdated        apijson.Field
+	PhysicalProperties apijson.Field
+	Satellites         apijson.Field
+	SuccessCallbackURL apijson.Field
+	Tags               apijson.Field
+	Type               apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
