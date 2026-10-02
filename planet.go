@@ -212,26 +212,26 @@ func (r *PlanetService) DelteImage(ctx context.Context, planetID int64, body Pla
 }
 
 type Planet struct {
-	ID          int64      `json:"id" api:"required"`
-	Name        string     `json:"name" api:"required"`
-	Description string     `json:"description" api:"nullable"`
-	Type        PlanetType `json:"type"`
+	ID   int64  `json:"id" api:"required"`
+	Name string `json:"name" api:"required"`
+	// Atmospheric composition
+	Atmosphere []PlanetAtmosphere `json:"atmosphere"`
+	// A user
+	Creator      User      `json:"creator"`
+	Description  string    `json:"description" api:"nullable"`
+	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
+	// URL which gets invoked upon a failed operation
+	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
 	// A score from 0 to 1 indicating potential habitability
 	HabitabilityIndex  float64                  `json:"habitabilityIndex"`
+	Image              string                   `json:"image" api:"nullable"`
+	LastUpdated        time.Time                `json:"lastUpdated" format:"date-time"`
 	PhysicalProperties PlanetPhysicalProperties `json:"physicalProperties"`
-	// Atmospheric composition
-	Atmosphere   []PlanetAtmosphere `json:"atmosphere"`
-	DiscoveredAt time.Time          `json:"discoveredAt" format:"date-time"`
-	Image        string             `json:"image" api:"nullable"`
-	Satellites   []*Satellite       `json:"satellites"`
-	// A user
-	Creator     User      `json:"creator"`
-	Tags        []string  `json:"tags"`
-	LastUpdated time.Time `json:"lastUpdated" format:"date-time"`
+	Satellites         []*Satellite             `json:"satellites"`
 	// URL which gets invoked upon a successful operation
-	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
-	// URL which gets invoked upon a failed operation
-	FailureCallbackURL string     `json:"failureCallbackUrl" format:"uri"`
+	SuccessCallbackURL string     `json:"successCallbackUrl" format:"uri"`
+	Tags               []string   `json:"tags"`
+	Type               PlanetType `json:"type"`
 	JSON               planetJSON `json:"-"`
 }
 
@@ -239,19 +239,19 @@ type Planet struct {
 type planetJSON struct {
 	ID                 apijson.Field
 	Name               apijson.Field
-	Description        apijson.Field
-	Type               apijson.Field
-	HabitabilityIndex  apijson.Field
-	PhysicalProperties apijson.Field
 	Atmosphere         apijson.Field
-	DiscoveredAt       apijson.Field
-	Image              apijson.Field
-	Satellites         apijson.Field
 	Creator            apijson.Field
-	Tags               apijson.Field
-	LastUpdated        apijson.Field
-	SuccessCallbackURL apijson.Field
+	Description        apijson.Field
+	DiscoveredAt       apijson.Field
 	FailureCallbackURL apijson.Field
+	HabitabilityIndex  apijson.Field
+	Image              apijson.Field
+	LastUpdated        apijson.Field
+	PhysicalProperties apijson.Field
+	Satellites         apijson.Field
+	SuccessCallbackURL apijson.Field
+	Tags               apijson.Field
+	Type               apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -313,8 +313,8 @@ type Satellite struct {
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
 	Diameter float64       `json:"diameter"`
-	Type     SatelliteType `json:"type"`
 	Orbit    interface{}   `json:"orbit"`
+	Type     SatelliteType `json:"type"`
 	JSON     satelliteJSON `json:"-"`
 }
 
@@ -324,8 +324,8 @@ type satelliteJSON struct {
 	ID          apijson.Field
 	Description apijson.Field
 	Diameter    apijson.Field
-	Type        apijson.Field
 	Orbit       apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -465,18 +465,18 @@ func (r PlanetAtmosphereParam) MarshalJSON() (data []byte, err error) {
 
 type PlanetListAllDataResponseMeta struct {
 	Limit  int64                             `json:"limit"`
+	Next   string                            `json:"next" api:"nullable"`
 	Offset int64                             `json:"offset"`
 	Total  int64                             `json:"total"`
-	Next   string                            `json:"next" api:"nullable"`
 	JSON   planetListAllDataResponseMetaJSON `json:"-"`
 }
 
 // planetListAllDataResponseMetaJSON contains the JSON metadata for the struct [PlanetListAllDataResponseMeta]
 type planetListAllDataResponseMetaJSON struct {
 	Limit       apijson.Field
+	Next        apijson.Field
 	Offset      apijson.Field
 	Total       apijson.Field
-	Next        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -490,25 +490,25 @@ func (r planetListAllDataResponseMetaJSON) RawJSON() string {
 }
 
 type PlanetDelteImageResponse struct {
-	Message string `json:"message"`
-	// The URL where the uploaded image can be accessed
-	ImageURL string `json:"imageUrl"`
-	// Timestamp when the image was uploaded
-	UploadedAt time.Time `json:"uploadedAt" format:"date-time"`
 	// Size of the uploaded image in bytes
 	FileSize int64 `json:"fileSize"`
+	// The URL where the uploaded image can be accessed
+	ImageURL string `json:"imageUrl"`
+	Message  string `json:"message"`
 	// The content type of the uploaded image
-	MimeType string                       `json:"mimeType"`
-	JSON     planetDelteImageResponseJSON `json:"-"`
+	MimeType string `json:"mimeType"`
+	// Timestamp when the image was uploaded
+	UploadedAt time.Time                    `json:"uploadedAt" format:"date-time"`
+	JSON       planetDelteImageResponseJSON `json:"-"`
 }
 
 // planetDelteImageResponseJSON contains the JSON metadata for the struct [PlanetDelteImageResponse]
 type planetDelteImageResponseJSON struct {
-	Message     apijson.Field
-	ImageURL    apijson.Field
-	UploadedAt  apijson.Field
 	FileSize    apijson.Field
+	ImageURL    apijson.Field
+	Message     apijson.Field
 	MimeType    apijson.Field
+	UploadedAt  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -522,21 +522,21 @@ func (r planetDelteImageResponseJSON) RawJSON() string {
 }
 
 type PlanetPhysicalProperties struct {
+	// Surface gravity in Earth g
+	Gravity float64 `json:"gravity"`
 	// Mass in Earth masses (must be greater than 0)
 	Mass float64 `json:"mass"`
 	// Radius in Earth radii (must be greater than 0)
-	Radius float64 `json:"radius"`
-	// Surface gravity in Earth g
-	Gravity     float64                             `json:"gravity"`
+	Radius      float64                             `json:"radius"`
 	Temperature PlanetPhysicalPropertiesTemperature `json:"temperature"`
 	JSON        planetPhysicalPropertiesJSON        `json:"-"`
 }
 
 // planetPhysicalPropertiesJSON contains the JSON metadata for the struct [PlanetPhysicalProperties]
 type planetPhysicalPropertiesJSON struct {
+	Gravity     apijson.Field
 	Mass        apijson.Field
 	Radius      apijson.Field
-	Gravity     apijson.Field
 	Temperature apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
@@ -586,20 +586,20 @@ func (r PlanetPhysicalPropertiesTemperatureParam) MarshalJSON() (data []byte, er
 }
 
 type PlanetPhysicalPropertiesTemperature struct {
-	// Minimum temperature in Kelvin
-	Min float64 `json:"min"`
+	// Average temperature in Kelvin
+	Average float64 `json:"average"`
 	// Maximum temperature in Kelvin
 	Max float64 `json:"max"`
-	// Average temperature in Kelvin
-	Average float64                                 `json:"average"`
-	JSON    planetPhysicalPropertiesTemperatureJSON `json:"-"`
+	// Minimum temperature in Kelvin
+	Min  float64                                 `json:"min"`
+	JSON planetPhysicalPropertiesTemperatureJSON `json:"-"`
 }
 
 // planetPhysicalPropertiesTemperatureJSON contains the JSON metadata for the struct [PlanetPhysicalPropertiesTemperature]
 type planetPhysicalPropertiesTemperatureJSON struct {
-	Min         apijson.Field
-	Max         apijson.Field
 	Average     apijson.Field
+	Max         apijson.Field
+	Min         apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

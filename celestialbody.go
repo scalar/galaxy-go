@@ -73,52 +73,52 @@ func (r CelestialBodyNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type CelestialBody struct {
-	Name        string            `json:"name" api:"required"`
-	ID          int64             `json:"id"`
-	Description string            `json:"description" api:"nullable"`
-	Type        CelestialBodyType `json:"type"`
-	// A score from 0 to 1 indicating potential habitability
-	HabitabilityIndex  float64     `json:"habitabilityIndex"`
-	PhysicalProperties interface{} `json:"physicalProperties"`
+	Name string `json:"name" api:"required"`
+	ID   int64  `json:"id"`
 	// Atmospheric composition
-	Atmosphere   interface{} `json:"atmosphere"`
-	DiscoveredAt time.Time   `json:"discoveredAt" format:"date-time"`
-	Image        string      `json:"image" api:"nullable"`
-	Satellites   interface{} `json:"satellites"`
+	Atmosphere interface{} `json:"atmosphere"`
 	// A user
-	Creator     User        `json:"creator"`
-	Tags        interface{} `json:"tags"`
-	LastUpdated time.Time   `json:"lastUpdated" format:"date-time"`
-	// URL which gets invoked upon a successful operation
-	SuccessCallbackURL string `json:"successCallbackUrl" format:"uri"`
+	Creator     User   `json:"creator"`
+	Description string `json:"description" api:"nullable"`
+	// Diameter in kilometers
+	Diameter     float64   `json:"diameter"`
+	DiscoveredAt time.Time `json:"discoveredAt" format:"date-time"`
 	// URL which gets invoked upon a failed operation
 	FailureCallbackURL string `json:"failureCallbackUrl" format:"uri"`
-	// Diameter in kilometers
-	Diameter float64           `json:"diameter"`
-	Orbit    interface{}       `json:"orbit"`
-	JSON     celestialBodyJSON `json:"-"`
-	union    CelestialBodyUnion
+	// A score from 0 to 1 indicating potential habitability
+	HabitabilityIndex  float64     `json:"habitabilityIndex"`
+	Image              string      `json:"image" api:"nullable"`
+	LastUpdated        time.Time   `json:"lastUpdated" format:"date-time"`
+	Orbit              interface{} `json:"orbit"`
+	PhysicalProperties interface{} `json:"physicalProperties"`
+	Satellites         interface{} `json:"satellites"`
+	// URL which gets invoked upon a successful operation
+	SuccessCallbackURL string            `json:"successCallbackUrl" format:"uri"`
+	Tags               interface{}       `json:"tags"`
+	Type               CelestialBodyType `json:"type"`
+	JSON               celestialBodyJSON `json:"-"`
+	union              CelestialBodyUnion
 }
 
 // celestialBodyJSON contains the JSON metadata for the struct [CelestialBody]
 type celestialBodyJSON struct {
 	Name               apijson.Field
 	ID                 apijson.Field
-	Description        apijson.Field
-	Type               apijson.Field
-	HabitabilityIndex  apijson.Field
-	PhysicalProperties apijson.Field
 	Atmosphere         apijson.Field
-	DiscoveredAt       apijson.Field
-	Image              apijson.Field
-	Satellites         apijson.Field
 	Creator            apijson.Field
-	Tags               apijson.Field
-	LastUpdated        apijson.Field
-	SuccessCallbackURL apijson.Field
-	FailureCallbackURL apijson.Field
+	Description        apijson.Field
 	Diameter           apijson.Field
+	DiscoveredAt       apijson.Field
+	FailureCallbackURL apijson.Field
+	HabitabilityIndex  apijson.Field
+	Image              apijson.Field
+	LastUpdated        apijson.Field
 	Orbit              apijson.Field
+	PhysicalProperties apijson.Field
+	Satellites         apijson.Field
+	SuccessCallbackURL apijson.Field
+	Tags               apijson.Field
+	Type               apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -139,6 +139,30 @@ func (r *CelestialBody) UnmarshalJSON(data []byte) (err error) {
 func (r CelestialBody) AsUnion() CelestialBodyUnion {
 	return r.union
 }
+
+type CelestialBodyParam struct {
+	Name               param.Field[string]            `json:"name" api:"required"`
+	Atmosphere         param.Field[interface{}]       `json:"atmosphere"`
+	Creator            param.Field[UserParam]         `json:"creator"`
+	Description        param.Field[string]            `json:"description"`
+	Diameter           param.Field[float64]           `json:"diameter"`
+	DiscoveredAt       param.Field[time.Time]         `json:"discoveredAt" format:"date-time"`
+	FailureCallbackURL param.Field[string]            `json:"failureCallbackUrl" format:"uri"`
+	HabitabilityIndex  param.Field[float64]           `json:"habitabilityIndex"`
+	Image              param.Field[string]            `json:"image"`
+	Orbit              param.Field[interface{}]       `json:"orbit"`
+	PhysicalProperties param.Field[interface{}]       `json:"physicalProperties"`
+	Satellites         param.Field[interface{}]       `json:"satellites"`
+	SuccessCallbackURL param.Field[string]            `json:"successCallbackUrl" format:"uri"`
+	Tags               param.Field[interface{}]       `json:"tags"`
+	Type               param.Field[CelestialBodyType] `json:"type"`
+}
+
+func (r CelestialBodyParam) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+func (r CelestialBodyParam) implementsCelestialBodyUnionParam() {}
 
 // Satisfied by [PlanetParam], [CelestialBodySatelliteParam], [CelestialBodyParam].
 type CelestialBodyUnionParam interface {
@@ -191,30 +215,6 @@ func (r CelestialBodyType) IsKnown() bool {
 	return false
 }
 
-type CelestialBodyParam struct {
-	Name               param.Field[string]            `json:"name" api:"required"`
-	Atmosphere         param.Field[interface{}]       `json:"atmosphere"`
-	Creator            param.Field[UserParam]         `json:"creator"`
-	Description        param.Field[string]            `json:"description"`
-	Diameter           param.Field[float64]           `json:"diameter"`
-	DiscoveredAt       param.Field[time.Time]         `json:"discoveredAt" format:"date-time"`
-	FailureCallbackURL param.Field[string]            `json:"failureCallbackUrl" format:"uri"`
-	HabitabilityIndex  param.Field[float64]           `json:"habitabilityIndex"`
-	Image              param.Field[string]            `json:"image"`
-	Orbit              param.Field[interface{}]       `json:"orbit"`
-	PhysicalProperties param.Field[interface{}]       `json:"physicalProperties"`
-	Satellites         param.Field[interface{}]       `json:"satellites"`
-	SuccessCallbackURL param.Field[string]            `json:"successCallbackUrl" format:"uri"`
-	Tags               param.Field[interface{}]       `json:"tags"`
-	Type               param.Field[CelestialBodyType] `json:"type"`
-}
-
-func (r CelestialBodyParam) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
-}
-
-func (r CelestialBodyParam) implementsCelestialBodyUnionParam() {}
-
 type CelestialBodySatelliteParam struct {
 	Name        param.Field[string] `json:"name" api:"required"`
 	Description param.Field[string] `json:"description"`
@@ -236,8 +236,8 @@ type CelestialBodySatellite struct {
 	Description string `json:"description" api:"nullable"`
 	// Diameter in kilometers
 	Diameter float64                    `json:"diameter"`
-	Type     CelestialBodySatelliteType `json:"type"`
 	Orbit    interface{}                `json:"orbit"`
+	Type     CelestialBodySatelliteType `json:"type"`
 	JSON     celestialBodySatelliteJSON `json:"-"`
 }
 
@@ -247,8 +247,8 @@ type celestialBodySatelliteJSON struct {
 	ID          apijson.Field
 	Description apijson.Field
 	Diameter    apijson.Field
-	Type        apijson.Field
 	Orbit       apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
