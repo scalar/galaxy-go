@@ -73,12 +73,12 @@ Pass credentials to the generated client constructor. Environment variables are 
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `option.WithBearerAuth` | `string \| provider` | - | JWT Bearer token authentication Defaults to BEARER_AUTH. |
-| `option.WithBasicAuthUsername` | `string \| provider` | - | Credential for the basicAuth_username client option. Defaults to BASIC_AUTH_USERNAME. |
-| `option.WithBasicAuthPassword` | `string \| provider` | - | Credential for the basicAuth_password client option. Defaults to BASIC_AUTH_PASSWORD. |
-| `option.WithAPIKeyHeader` | `string \| provider` | - | API key request header Defaults to API_KEY_HEADER. |
-| `option.WithAPIKeyQuery` | `string \| provider` | - | API key query parameter Defaults to API_KEY_QUERY. |
-| `option.WithAPIKeyCookie` | `string \| provider` | - | API key browser cookie Defaults to API_KEY_COOKIE. |
+| `option.WithBearerAuth` | `func(string) option.RequestOption` | - | JWT Bearer token authentication Defaults to BEARER_AUTH. |
+| `option.WithBasicAuthUsername` | `func(string) option.RequestOption` | - | Credential for the basicAuth_username client option. Defaults to BASIC_AUTH_USERNAME. |
+| `option.WithBasicAuthPassword` | `func(string) option.RequestOption` | - | Credential for the basicAuth_password client option. Defaults to BASIC_AUTH_PASSWORD. |
+| `option.WithAPIKeyHeader` | `func(string) option.RequestOption` | - | API key request header Defaults to API_KEY_HEADER. |
+| `option.WithAPIKeyQuery` | `func(string) option.RequestOption` | - | API key query parameter Defaults to API_KEY_QUERY. |
+| `option.WithAPIKeyCookie` | `func(string) option.RequestOption` | - | API key browser cookie Defaults to API_KEY_COOKIE. |
 
 Declared schemes:
 
@@ -104,7 +104,7 @@ planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAl
 if err != nil {
 	var apiErr *sdk.Error
 	if errors.As(err, &apiErr) {
-		fmt.Println(apiErr.StatusCode, apiErr.RawJSON())
+		fmt.Println(apiErr.StatusCode, apiErr.JSON.RawJSON())
 	}
 	panic(err)
 }
@@ -168,7 +168,7 @@ Generated clients support request timeouts and retry temporary failures such as 
 ## Helpers
 
 - Pass `option.WithResponseInto(&raw)` to capture the underlying `*http.Response` for a request.
-- Use the generated `String`, `Int`, `Bool`, `Float`, `Time`, `Opt`, and `Ptr` helpers when setting optional params.
+- Use the generated `F`, `Null`, `Raw`, `Int`, `String`, `Float`, `Bool`, and `FileParam` helpers when setting optional params.
 
 <br />
 

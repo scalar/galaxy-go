@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.2](https://github.com/scalar/galaxy-go/compare/v0.3.1...v0.3.2) (2026-10-07)
+
+
+### Chores
+
+* **api:** regenerate SDK ([1577938](https://github.com/scalar/galaxy-go/commit/15779388068aa031ba1d1efc553b2a1f25afedfe))
+* **api:** regenerate SDK ([a0acf7a](https://github.com/scalar/galaxy-go/commit/a0acf7a187b4635887176be65722b45abba0df21))
+* **api:** update generated SDK content ([fb2929b](https://github.com/scalar/galaxy-go/commit/fb2929b10d6f92a664f2089700cf3ded3b128d09))
+
 ## [0.3.1](https://github.com/scalar/galaxy-go/compare/v0.3.0...v0.3.1) (2026-09-15)
 
 
