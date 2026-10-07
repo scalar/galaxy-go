@@ -180,16 +180,14 @@ type CelestialBodyUnion interface {
 func init() {
 	apijson.RegisterUnion(
 		reflect.TypeOf((*CelestialBodyUnion)(nil)).Elem(),
-		"type",
+		"",
 		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(Planet{}),
-			DiscriminatorValue: "terrestrial",
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(Planet{}),
 		},
 		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(CelestialBodySatellite{}),
-			DiscriminatorValue: "moon",
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(CelestialBodySatellite{}),
 		},
 	)
 }
