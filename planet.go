@@ -42,16 +42,16 @@ func NewPlanetService(opts ...option.RequestOption) (r *PlanetService) {
 // Parameters:
 //
 //	ctx: Context for the request.
-//	query: PlanetListAllDataParams request parameters.
+//	query: PlanetListParams request parameters.
 //	opts: Options to apply to this request.
 //
 // Returns:
 //
-//	*PlanetListAllDataResponse: OK
+//	*PlanetListResponse: OK
 //
 // Example:
 //
-//	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+//	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
 //		Limit:  sdk.F[int64](10),
 //		Offset: sdk.F[int64](0),
 //	})
@@ -60,7 +60,7 @@ func NewPlanetService(opts ...option.RequestOption) (r *PlanetService) {
 //	}
 //
 //	fmt.Println(planet)
-func (r *PlanetService) ListAllData(ctx context.Context, query PlanetListAllDataParams, opts ...option.RequestOption) (res *PlanetListAllDataResponse, err error) {
+func (r *PlanetService) List(ctx context.Context, query PlanetListParams, opts ...option.RequestOption) (res *PlanetListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "planets"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
@@ -189,22 +189,22 @@ func (r *PlanetService) Delete(ctx context.Context, planetID int64, opts ...opti
 //
 //	ctx: Context for the request.
 //	planetID: The ID of the planet to get
-//	body: PlanetDelteImageParams request parameters.
+//	body: PlanetUploadImageParams request parameters.
 //	opts: Options to apply to this request.
 //
 // Returns:
 //
-//	*PlanetDelteImageResponse: Image uploaded
+//	*PlanetUploadImageResponse: Image uploaded
 //
 // Example:
 //
-//	planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
+//	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
 //	if err != nil {
 //		panic(err)
 //	}
 //
 //	fmt.Println(planet)
-func (r *PlanetService) DelteImage(ctx context.Context, planetID int64, body PlanetDelteImageParams, opts ...option.RequestOption) (res *PlanetDelteImageResponse, err error) {
+func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body PlanetUploadImageParams, opts ...option.RequestOption) (res *PlanetUploadImageResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := fmt.Sprintf("planets/%v/image", planetID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -367,39 +367,39 @@ func (r SatelliteType) IsKnown() bool {
 	return false
 }
 
-type PlanetListAllDataResponse struct {
-	Data []interface{}                 `json:"data"`
-	Meta PlanetListAllDataResponseMeta `json:"meta"`
-	JSON planetListAllDataResponseJSON `json:"-"`
+type PlanetListResponse struct {
+	Data []interface{}          `json:"data"`
+	Meta PlanetListResponseMeta `json:"meta"`
+	JSON planetListResponseJSON `json:"-"`
 }
 
-// planetListAllDataResponseJSON contains the JSON metadata for the struct [PlanetListAllDataResponse]
-type planetListAllDataResponseJSON struct {
+// planetListResponseJSON contains the JSON metadata for the struct [PlanetListResponse]
+type planetListResponseJSON struct {
 	Data        apijson.Field
 	Meta        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PlanetListAllDataResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *PlanetListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r planetListAllDataResponseJSON) RawJSON() string {
+func (r planetListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type PlanetListAllDataParams struct {
+type PlanetListParams struct {
 	// The number of items to return
 	Limit param.Field[int64] `query:"limit"`
 	// The number of items to skip before starting to collect the result set
 	Offset param.Field[int64] `query:"offset"`
 }
 
-// URLQuery serializes [PlanetListAllDataParams]'s query parameters as `url.Values`.
-func (r PlanetListAllDataParams) URLQuery() (v url.Values) {
+// URLQuery serializes [PlanetListParams]'s query parameters as `url.Values`.
+func (r PlanetListParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
@@ -420,12 +420,12 @@ func (r PlanetUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r.Planet)
 }
 
-type PlanetDelteImageParams struct {
+type PlanetUploadImageParams struct {
 	// The image file to upload
 	Image param.Field[io.Reader] `json:"image" format:"binary"`
 }
 
-func (r PlanetDelteImageParams) MarshalMultipart() (data []byte, contentType string, err error) {
+func (r PlanetUploadImageParams) MarshalMultipart() (data []byte, contentType string, err error) {
 	buf := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(buf)
 	err = apiform.MarshalRoot(r, writer)
@@ -463,16 +463,16 @@ func (r PlanetAtmosphereParam) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type PlanetListAllDataResponseMeta struct {
-	Limit  int64                             `json:"limit"`
-	Next   string                            `json:"next" api:"nullable"`
-	Offset int64                             `json:"offset"`
-	Total  int64                             `json:"total"`
-	JSON   planetListAllDataResponseMetaJSON `json:"-"`
+type PlanetListResponseMeta struct {
+	Limit  int64                      `json:"limit"`
+	Next   string                     `json:"next" api:"nullable"`
+	Offset int64                      `json:"offset"`
+	Total  int64                      `json:"total"`
+	JSON   planetListResponseMetaJSON `json:"-"`
 }
 
-// planetListAllDataResponseMetaJSON contains the JSON metadata for the struct [PlanetListAllDataResponseMeta]
-type planetListAllDataResponseMetaJSON struct {
+// planetListResponseMetaJSON contains the JSON metadata for the struct [PlanetListResponseMeta]
+type planetListResponseMetaJSON struct {
 	Limit       apijson.Field
 	Next        apijson.Field
 	Offset      apijson.Field
@@ -481,15 +481,15 @@ type planetListAllDataResponseMetaJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PlanetListAllDataResponseMeta) UnmarshalJSON(data []byte) (err error) {
+func (r *PlanetListResponseMeta) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r planetListAllDataResponseMetaJSON) RawJSON() string {
+func (r planetListResponseMetaJSON) RawJSON() string {
 	return r.raw
 }
 
-type PlanetDelteImageResponse struct {
+type PlanetUploadImageResponse struct {
 	// Size of the uploaded image in bytes
 	FileSize int64 `json:"fileSize"`
 	// The URL where the uploaded image can be accessed
@@ -498,12 +498,12 @@ type PlanetDelteImageResponse struct {
 	// The content type of the uploaded image
 	MimeType string `json:"mimeType"`
 	// Timestamp when the image was uploaded
-	UploadedAt time.Time                    `json:"uploadedAt" format:"date-time"`
-	JSON       planetDelteImageResponseJSON `json:"-"`
+	UploadedAt time.Time                     `json:"uploadedAt" format:"date-time"`
+	JSON       planetUploadImageResponseJSON `json:"-"`
 }
 
-// planetDelteImageResponseJSON contains the JSON metadata for the struct [PlanetDelteImageResponse]
-type planetDelteImageResponseJSON struct {
+// planetUploadImageResponseJSON contains the JSON metadata for the struct [PlanetUploadImageResponse]
+type planetUploadImageResponseJSON struct {
 	FileSize    apijson.Field
 	ImageURL    apijson.Field
 	Message     apijson.Field
@@ -513,11 +513,11 @@ type planetDelteImageResponseJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PlanetDelteImageResponse) UnmarshalJSON(data []byte) (err error) {
+func (r *PlanetUploadImageResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r planetDelteImageResponseJSON) RawJSON() string {
+func (r planetUploadImageResponseJSON) RawJSON() string {
 	return r.raw
 }
 
