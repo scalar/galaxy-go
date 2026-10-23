@@ -399,7 +399,7 @@ type PlanetListAllDataParams struct {
 // URLQuery serializes [PlanetListAllDataParams]'s query parameters as `url.Values`.
 func (r PlanetListAllDataParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
