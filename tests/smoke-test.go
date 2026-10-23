@@ -43,7 +43,7 @@ type smokeCase struct {
 }
 
 func _smokeCase0() {
-	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
 		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
@@ -145,7 +145,7 @@ func _smokeCase6() {
 }
 
 func _smokeCase7() {
-	planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
+	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
 	if err != nil {
 		panic(err)
 	}
@@ -154,7 +154,7 @@ func _smokeCase7() {
 }
 
 func _smokeCase8() {
-	planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{
+	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{
 		Image: sdk.F[io.Reader](strings.NewReader("")),
 	})
 	if err != nil {
@@ -215,7 +215,7 @@ func _smokeCase12() {
 
 var cases = []smokeCase{
 	{
-		Operation: "listAllData",
+		Operation: "list",
 		Method:    "GET",
 		Path:      "/planets",
 		Run:       _smokeCase0,
@@ -268,7 +268,7 @@ var cases = []smokeCase{
 	},
 
 	{
-		Operation: "delteImage",
+		Operation: "uploadImage",
 		Method:    "POST",
 		Path:      "/planets/{planetId}/image",
 		Label:     "required params",
@@ -276,7 +276,7 @@ var cases = []smokeCase{
 	},
 
 	{
-		Operation: "delteImage",
+		Operation: "uploadImage",
 		Method:    "POST",
 		Path:      "/planets/{planetId}/image",
 		Label:     "all params",
