@@ -41,11 +41,11 @@ It's easy to say you know them all, but do you really? Retrieve all the planets 
 
 | Direction | Type |
 | --- | --- |
-| Request | [`PlanetListAllDataParams`](./planet.go) |
-| Response | [`PlanetListAllDataResponse`](./planet.go) |
+| Request | [`PlanetListParams`](./planet.go) |
+| Response | [`PlanetListResponse`](./planet.go) |
 
 ```go
-planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
 	Limit:  sdk.F[int64](10),
 	Offset: sdk.F[int64](0),
 })
@@ -134,11 +134,11 @@ Got a crazy good photo of a planet? Share it with the world!
 
 | Direction | Type |
 | --- | --- |
-| Request | [`PlanetDelteImageParams`](./planet.go) |
-| Response | [`PlanetDelteImageResponse`](./planet.go) |
+| Request | [`PlanetUploadImageParams`](./planet.go) |
+| Response | [`PlanetUploadImageResponse`](./planet.go) |
 
 ```go
-planet, err := client.Planets.DelteImage(context.Background(), 1, sdk.PlanetDelteImageParams{})
+planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
 if err != nil {
 	panic(err)
 }
