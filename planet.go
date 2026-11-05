@@ -367,28 +367,6 @@ func (r SatelliteType) IsKnown() bool {
 	return false
 }
 
-type PlanetListResponse struct {
-	Data []interface{}          `json:"data"`
-	Meta PlanetListResponseMeta `json:"meta"`
-	JSON planetListResponseJSON `json:"-"`
-}
-
-// planetListResponseJSON contains the JSON metadata for the struct [PlanetListResponse]
-type planetListResponseJSON struct {
-	Data        apijson.Field
-	Meta        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *PlanetListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r planetListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
 type PlanetListParams struct {
 	// The number of items to return
 	Limit param.Field[int64] `query:"limit"`
@@ -463,29 +441,25 @@ func (r PlanetAtmosphereParam) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-type PlanetListResponseMeta struct {
-	Limit  int64                      `json:"limit"`
-	Next   string                     `json:"next" api:"nullable"`
-	Offset int64                      `json:"offset"`
-	Total  int64                      `json:"total"`
-	JSON   planetListResponseMetaJSON `json:"-"`
+type PlanetListResponse struct {
+	Data []Planet               `json:"data"`
+	Meta PlanetListResponseMeta `json:"meta"`
+	JSON planetListResponseJSON `json:"-"`
 }
 
-// planetListResponseMetaJSON contains the JSON metadata for the struct [PlanetListResponseMeta]
-type planetListResponseMetaJSON struct {
-	Limit       apijson.Field
-	Next        apijson.Field
-	Offset      apijson.Field
-	Total       apijson.Field
+// planetListResponseJSON contains the JSON metadata for the struct [PlanetListResponse]
+type planetListResponseJSON struct {
+	Data        apijson.Field
+	Meta        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *PlanetListResponseMeta) UnmarshalJSON(data []byte) (err error) {
+func (r *PlanetListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r planetListResponseMetaJSON) RawJSON() string {
+func (r planetListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -583,6 +557,32 @@ type PlanetPhysicalPropertiesTemperatureParam struct {
 
 func (r PlanetPhysicalPropertiesTemperatureParam) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+type PlanetListResponseMeta struct {
+	Limit  int64                      `json:"limit"`
+	Next   string                     `json:"next" api:"nullable"`
+	Offset int64                      `json:"offset"`
+	Total  int64                      `json:"total"`
+	JSON   planetListResponseMetaJSON `json:"-"`
+}
+
+// planetListResponseMetaJSON contains the JSON metadata for the struct [PlanetListResponseMeta]
+type planetListResponseMetaJSON struct {
+	Limit       apijson.Field
+	Next        apijson.Field
+	Offset      apijson.Field
+	Total       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PlanetListResponseMeta) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r planetListResponseMetaJSON) RawJSON() string {
+	return r.raw
 }
 
 type PlanetPhysicalPropertiesTemperature struct {
