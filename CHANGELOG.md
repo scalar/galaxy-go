@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.4.0](https://github.com/scalar/galaxy-go/compare/v0.3.2...v0.4.0) (2026-11-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** 2 breaking changes to the SDK surface.
+    - Response of `planets.list` changed from `paginated_resource` to an unnamed `application/json` body.
+    - Removed schema `paginated_resource`.
+* **api:** 5 breaking changes to the SDK surface.
+    - Removed operation `planets.listAllData` (`GET /planets`).
+    - Removed operation `planets.delteImage` (`POST /planets/{planetId}/image`).
+    - Removed schema `ListAllDataResponseHeaders`.
+    - Removed schema `DelteImageResponseHeaders`.
+    - Removed schema `DelteImageStatus400ResponseHeaders`.
+
+### Features
+
+* **api:** remove operation planets.listAllData (+9 more changes) ([357a50b](https://github.com/scalar/galaxy-go/commit/357a50b4577df640c1eb9306c109fce41e8a76b9))
+* **api:** update response of planets.list (+2 more changes) ([fdcf24b](https://github.com/scalar/galaxy-go/commit/fdcf24b3a0ed8d00d28732ffc3a74b544f0e5888))
+
+
+### Chores
+
+* **api:** regenerate SDK ([714bf51](https://github.com/scalar/galaxy-go/commit/714bf51f74b07da6ff34601879318bbaac9767c7))
+
 ## [0.3.2](https://github.com/scalar/galaxy-go/compare/v0.3.1...v0.3.2) (2026-10-07)
 
 
