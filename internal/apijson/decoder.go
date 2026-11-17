@@ -61,8 +61,19 @@ const (
 	// Some values had to fudged a bit, for example by converting a string to an
 	// int, or an enum with extra values.
 	loose exactness = iota
+	// Both extras and lenient at once. It ranks below either alone, so a variant
+	// that only has the extra fields still beats one that also needed a lenient
+	// spelling, as it would without the extra fields.
+	lenientExtras
 	// There are some extra arguments, but other wise it matches the union.
 	extras
+	// A value is in a lenient spelling, such as a timestamp in a fallback layout,
+	// or is a date-time value no layout can read, which leaves the field zero.
+	// It ranks below an exact match, so a plain string arm still wins such a
+	// value, and above loose and extras, so how a timestamp is spelled, or
+	// whether it can be read at all, never outweighs an enum value that is
+	// unknown to a variant or fields a variant does not declare.
+	lenient
 	// Exactly right.
 	exact
 )
@@ -278,7 +289,7 @@ func (d *decoderBuilder) newUnionDecoder(t reflect.Type) decoderFunc {
 			return errors.New("apijson: was not able to coerce type as union")
 		}
 
-		if guardStrict(state, bestExactness != exact) {
+		if !passUnionRank(state, bestExactness) {
 			return errors.New("apijson: was not able to coerce type as union strictly")
 		}
 
@@ -523,8 +534,8 @@ func (d *decoderBuilder) newStructTypeDecoder(t reflect.Type) decoderFunc {
 		}
 
 		// Set exactness to 'extras' if there are untyped, extra fields.
-		if len(untypedExtraFields) > 0 && state.exactness > extras {
-			state.exactness = extras
+		if len(untypedExtraFields) > 0 {
+			markExtras(state)
 		}
 
 		if metadata := getSubField(value, []int{-1}, "ExtraFields"); metadata.IsValid() && len(untypedExtraFields) > 0 {
@@ -647,26 +658,84 @@ func (d *decoderBuilder) newTimeTypeDecoder(t reflect.Type) decoderFunc {
 		for _, layout := range layouts {
 			parsed, err := time.Parse(layout, n.Str)
 			if err == nil {
-				// Outside strict mode a fallback layout ranks as a loose match, so a
-				// union prefers a variant that decoded the value exactly.
+				// Outside strict mode a fallback layout ranks as a lenient match: a
+				// union still prefers a variant that decoded the value exactly (a plain
+				// string arm beats a date-time arm), and does not tie with a variant
+				// that ranks loose or extras for a reason of its own.
 				if !state.strict {
-					state.exactness = loose
+					markLenient(state)
 				}
 				v.Set(reflect.ValueOf(parsed).Convert(t))
 				return nil
 			}
 		}
 
-		if guardStrict(state, true) {
+		if state.strict {
 			return err
 		}
 
+		// No layout reads this value, so the field stays zero. It still ranks as
+		// a lenient match: the variant declares the field, so a variant that does
+		// not, and ranks extras or loose for it, must not win the value instead.
+		markLenient(state)
 		return fmt.Errorf("unable to leniently parse date-time string: %s", n.Str)
 	}
 }
 
 func setUnexportedField(field reflect.Value, value interface{}) {
 	reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).Elem().Set(reflect.ValueOf(value))
+}
+
+// markLenient lowers the state to record a value decoded in a lenient spelling,
+// or a date-time value no layout can read.
+// The state is shared by every field of the enclosing struct and the structs
+// nested in it, so the rank only ever moves down and keeps what other fields
+// recorded: extras become lenientExtras, and loose stays loose.
+func markLenient(state *decoderState) {
+	switch state.exactness {
+	case exact:
+		state.exactness = lenient
+	case extras:
+		state.exactness = lenientExtras
+	}
+}
+
+// markExtras lowers the state to record a struct with untyped, extra fields,
+// keeping a lenient value already recorded (see [markLenient]).
+func markExtras(state *decoderState) {
+	switch state.exactness {
+	case exact:
+		state.exactness = extras
+	case lenient:
+		state.exactness = lenientExtras
+	}
+}
+
+// passUnionRank records a union's best rank on the enclosing state, so an
+// enclosing union compares the variant holding this union by the same order
+// that picked inside it. It reports false when strict mode refuses the rank.
+func passUnionRank(state *decoderState, best exactness) bool {
+	if best == exact {
+		return true
+	}
+
+	if state.strict {
+		return false
+	}
+
+	switch best {
+	case lenient:
+		markLenient(state)
+	case extras:
+		markExtras(state)
+	case lenientExtras:
+		markLenient(state)
+		markExtras(state)
+	default:
+		state.exactness = loose
+	}
+
+	return true
 }
 
 func guardStrict(state *decoderState, cond bool) bool {
