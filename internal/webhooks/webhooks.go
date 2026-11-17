@@ -9,10 +9,13 @@ package webhooks
 
 import (
 	"crypto/hmac"
+	"crypto/sha1"
 	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"hash"
 	"net/http"
 	"strconv"
 	"strings"
@@ -79,12 +82,48 @@ const (
 	signatureHeader = "webhook-signature"
 )
 
+// Scheme is how one webhook helper's deliveries are signed: the algorithm,
+// the headers a delivery carries its id, timestamp and signatures in, and how
+// far its timestamp may drift from now. A zero field means the Standard
+// Webhooks default: HMAC-SHA256, the "webhook-*" headers and DefaultTolerance.
+type Scheme struct {
+	// Algorithm names the signature algorithm as the SDK config spells it:
+	// "hmac-sha1", "hmac-sha256" or "hmac-sha512". Any other value refuses
+	// every delivery, since this package cannot check it.
+	Algorithm string
+	// IDHeader is the header carrying the delivery id.
+	IDHeader string
+	// TimestampHeader is the header carrying the Unix timestamp the delivery
+	// was signed at.
+	TimestampHeader string
+	// SignatureHeader is the header carrying the "v1,<base64>" signatures.
+	SignatureHeader string
+	// Tolerance bounds how far the timestamp may drift from now, in either
+	// direction.
+	Tolerance time.Duration
+	// Fallback names the SDK method that decodes a delivery without verifying
+	// it, which the error for an algorithm this package cannot check points at.
+	Fallback string
+}
+
 // Verify checks a Standard Webhooks signature: the HMAC-SHA256 of
 // "{id}.{timestamp}.{payload}" keyed with the base64-decoded secret must match
 // one of the space-separated "v1,<base64>" entries in the "webhook-signature"
 // header, and the "webhook-timestamp" header must be within tolerance of now.
 // Comparison is constant-time.
 func Verify(payload []byte, headers http.Header, secret string, now time.Time, tolerance time.Duration) error {
+	return VerifyScheme(payload, headers, secret, now, Scheme{Tolerance: tolerance})
+}
+
+// VerifyScheme checks a delivery the way Verify does, with the algorithm,
+// header names and tolerance scheme names instead of the defaults. An
+// algorithm it cannot check (such as "ed25519") refuses every delivery, so a
+// forged payload is never reported as verified.
+func VerifyScheme(payload []byte, headers http.Header, secret string, now time.Time, scheme Scheme) error {
+	newHash, err := scheme.hash()
+	if err != nil {
+		return err
+	}
 	// Decoding the secret first means a misconfigured secret is reported as
 	// such, whatever the delivery carries.
 	key, err := decodeSecret(secret)
@@ -92,9 +131,9 @@ func Verify(payload []byte, headers http.Header, secret string, now time.Time, t
 		return err
 	}
 
-	id := headers.Get(idHeader)
-	timestamp := headers.Get(timestampHeader)
-	signatures := headers.Get(signatureHeader)
+	id := headers.Get(orDefault(scheme.IDHeader, idHeader))
+	timestamp := headers.Get(orDefault(scheme.TimestampHeader, timestampHeader))
+	signatures := headers.Get(orDefault(scheme.SignatureHeader, signatureHeader))
 	if id == "" || timestamp == "" || signatures == "" {
 		return refused(ErrRequiredHeaders, nil, ErrRequiredHeaders.Error())
 	}
@@ -105,18 +144,47 @@ func Verify(payload []byte, headers http.Header, secret string, now time.Time, t
 		// header's value, then the sentinel's message on its own line.
 		return refused(ErrInvalidHeaders, err, "unable to parse timestamp header, err: "+errors.Join(err, ErrInvalidHeaders).Error())
 	}
-	if err := checkFreshness(time.Unix(sentAt, 0), now, tolerance); err != nil {
+	if err := checkFreshness(time.Unix(sentAt, 0), now, scheme.Tolerance); err != nil {
 		return err
 	}
 
 	// The signed timestamp is the parsed integer written back out, so a header
 	// sent as "+1614265330" or "01614265330" is checked against the signature
 	// of "1614265330".
-	expected := sign(key, id, strconv.FormatInt(sentAt, 10), payload)
+	expected := signWith(newHash, key, id, strconv.FormatInt(sentAt, 10), payload)
 	if !anySignatureMatches(signatures, expected) {
 		return refused(ErrNoMatchingSignature, nil, ErrNoMatchingSignature.Error())
 	}
 	return nil
+}
+
+// hash returns the hash the scheme's HMAC is computed with, or the refusal
+// for an algorithm this package cannot check. That refusal matches
+// ErrNoMatchingSignature: no signature the delivery carries can be shown to
+// match.
+func (s Scheme) hash() (func() hash.Hash, error) {
+	switch s.Algorithm {
+	case "", "hmac-sha256":
+		return sha256.New, nil
+	case "hmac-sha512":
+		return sha512.New, nil
+	case "hmac-sha1":
+		return sha1.New, nil
+	}
+	advice := "verify the delivery yourself before trusting its payload"
+	if s.Fallback != "" {
+		advice = "verify the delivery yourself, then decode it with " + s.Fallback
+	}
+	detail := fmt.Sprintf("signature algorithm %q is not supported by this SDK; %s", s.Algorithm, advice)
+	return nil, refused(ErrNoMatchingSignature, nil, detail)
+}
+
+// orDefault returns name, or fallback when name is empty.
+func orDefault(name string, fallback string) string {
+	if name == "" {
+		return fallback
+	}
+	return name
 }
 
 // checkFreshness rejects a delivery sent more than tolerance before or after
@@ -184,7 +252,13 @@ func decodeSecret(secret string) ([]byte, error) {
 
 // sign returns the base64 HMAC-SHA256 of "{id}.{timestamp}.{payload}" under key.
 func sign(key []byte, id string, timestamp string, payload []byte) string {
-	mac := hmac.New(sha256.New, key)
+	return signWith(sha256.New, key, id, timestamp, payload)
+}
+
+// signWith returns the base64 HMAC of "{id}.{timestamp}.{payload}" under key,
+// computed with newHash.
+func signWith(newHash func() hash.Hash, key []byte, id string, timestamp string, payload []byte) string {
+	mac := hmac.New(newHash, key)
 	mac.Write([]byte(id))
 	mac.Write([]byte("."))
 	mac.Write([]byte(timestamp))
