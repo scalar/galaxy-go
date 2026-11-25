@@ -30,8 +30,13 @@ import (
 	"github.com/scalar/galaxy-go/internal/redact"
 )
 
+// getDefaultHeaders are the headers NewRequestConfig writes with the SDK's own values before any
+// option applies, other than the `X-Scalar-*` ones: the JSON `Accept` and the SDK's `User-Agent`.
+// Code that must tell the SDK's own values from a client's reads them here, never a copy, so the
+// two cannot drift.
 func getDefaultHeaders() map[string]string {
 	return map[string]string{
+		"Accept":     "application/json",
 		"User-Agent": fmt.Sprintf("ScalarGalaxy/Go %s", internal.PackageVersion),
 	}
 }
@@ -192,7 +197,6 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 		req.Header.Set("Content-Type", contentType)
 	}
 
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-Scalar-Retry-Count", "0")
 	req.Header.Set("X-Scalar-Timeout", "0")
 	for k, v := range getDefaultHeaders() {

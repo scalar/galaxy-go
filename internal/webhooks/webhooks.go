@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"hash"
 	"net/http"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -36,8 +37,10 @@ const signatureVersion = "v1"
 // The reasons a delivery is refused. Every error Verify returns for a refused
 // delivery matches exactly one of them, so callers branch with errors.Is. They
 // carry the names and messages of the Standard Webhooks Go library's sentinels,
-// which SDKs that verified through that library returned wrapped; the SDK
-// package re-exports them, because callers cannot import an internal package.
+// which SDKs that verified through that library returned wrapped, and a refusal
+// matches the library's sentinel of the same name too (see verificationError.Is);
+// the SDK package re-exports them, because callers cannot import an internal
+// package.
 var (
 	ErrRequiredHeaders     = errors.New("missing required headers")
 	ErrInvalidHeaders      = errors.New("invalid signature headers")
@@ -48,7 +51,8 @@ var (
 
 // verificationError is a refused delivery: its message says what was wrong in
 // the Standard Webhooks library's words, errors.Is matches the sentinel naming
-// the reason, and it unwraps to the error that caused it, when there is one.
+// the reason (ours, or the library's of the same name), and it unwraps to the
+// error that caused it, when there is one.
 type verificationError struct {
 	message  string
 	sentinel error
@@ -66,8 +70,23 @@ func refused(sentinel error, cause error, detail string) error {
 func (e *verificationError) Error() string { return e.message }
 
 // Is reports whether target is the sentinel naming this refusal, which is how
-// errors.Is matches it.
-func (e *verificationError) Is(target error) bool { return target == e.sentinel }
+// errors.Is matches it. Besides our own sentinel it accepts the Standard
+// Webhooks Go library's sentinel for the same reason, so a caller's
+// errors.Is(err, standardwebhooks.ErrMessageTooOld), written when SDKs
+// verified through that library, still takes the right branch. That variable
+// cannot be compared by identity without importing the library, which this
+// package deliberately does not, so it is recognized by what the library
+// declares it as: an errors.New value (the same dynamic type as our own
+// sentinels) carrying exactly our sentinel's message. Every sentinel's message
+// differs, so a refusal still matches exactly one reason.
+func (e *verificationError) Is(target error) bool {
+	if target == e.sentinel {
+		return true
+	}
+	return target != nil &&
+		reflect.TypeOf(target) == reflect.TypeOf(e.sentinel) &&
+		target.Error() == e.sentinel.Error()
+}
 
 // Unwrap returns the error that caused the refusal, if any, so errors.Unwrap
 // and errors.As still reach a timestamp's *strconv.NumError as they did when
