@@ -54,7 +54,7 @@ func main() {
 		option.WithBearerAuth(os.Getenv("BEARER_AUTH")),
 	)
 
-	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
 		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
@@ -73,7 +73,7 @@ Method names, parameter shapes, and response types are generated from the API de
 Non-success responses return generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```go
-planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
+planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
 	Limit:  sdk.F[int64](10),
 	Offset: sdk.F[int64](0),
 })
@@ -94,5 +94,5 @@ if err != nil {
 
 ## Reference files
 
-- [README.md](../../../README.md) — full feature tour: client options, request options, retries and timeouts, logging.
+- [README.md](../../../README.md) — full feature tour: client options, request options, retries and timeouts, webhooks, logging.
 - [api.md](../../../api.md) — complete catalogue of every operation with request and response types.

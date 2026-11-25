@@ -3,7 +3,6 @@ module github.com/scalar/galaxy-go
 go 1.22
 
 require (
-	github.com/standard-webhooks/standard-webhooks/libraries v0.0.1
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/sjson v1.2.5
 )

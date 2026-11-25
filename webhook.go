@@ -8,10 +8,9 @@ import (
 	"slices"
 	"time"
 
-	standardwebhooks "github.com/standard-webhooks/standard-webhooks/libraries/go"
-
 	"github.com/scalar/galaxy-go/internal/apijson"
 	"github.com/scalar/galaxy-go/internal/requestconfig"
+	"github.com/scalar/galaxy-go/internal/webhooks"
 	"github.com/scalar/galaxy-go/option"
 )
 
@@ -31,9 +30,9 @@ func NewWebhookService(opts ...option.RequestOption) (r *WebhookService) {
 	return
 }
 
-// Parsed verifies the webhook signature using the WebhookSecret option (set on the
+// Unwrap verifies the webhook signature using the WebhookSecret option (set on the
 // client or per call) and decodes the payload into a [ParsedWebhookEvent].
-func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...option.RequestOption) (*ParsedWebhookEvent, error) {
+func (r *WebhookService) Unwrap(payload []byte, headers http.Header, opts ...option.RequestOption) (*ParsedWebhookEvent, error) {
 	opts = slices.Concat(r.Options, opts)
 	cfg, err := requestconfig.PreRequestOptions(opts...)
 	if err != nil {
@@ -43,16 +42,39 @@ func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...opt
 	if key == "" {
 		return nil, errors.New("The WebhookSecret option must be set in order to verify webhook headers")
 	}
-	wh, err := standardwebhooks.NewWebhook(key)
-	if err != nil {
-		return nil, err
-	}
-	err = wh.Verify(payload, headers)
+	err = webhooks.Verify(payload, headers, key, time.Now(), webhooks.DefaultTolerance)
 	if err != nil {
 		return nil, err
 	}
 	res := &ParsedWebhookEvent{}
 	err = res.UnmarshalJSON(payload)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+}
+
+// Parsed is the former name of [WebhookService.Unwrap], which it calls with the same
+// arguments.
+func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...option.RequestOption) (*ParsedWebhookEvent, error) {
+	return r.Unwrap(payload, headers, opts...)
+}
+
+// VerifySignature verifies that the payload was signed with secret, returning an error when
+// it was not or when its timestamp is more than five minutes from now. Pass time.Now() for a live
+// delivery; now must come from a trusted clock, never from the request.
+func (r *WebhookService) VerifySignature(payload []byte, headers http.Header, secret string, now time.Time) error {
+	if secret == "" {
+		return errors.New("VerifySignature requires a non-empty secret")
+	}
+	return webhooks.Verify(payload, headers, secret, now, webhooks.DefaultTolerance)
+}
+
+// ParseUnsafe parses the payload into a [ParsedWebhookEvent] without verifying its signature.
+// Only use this for a payload whose signature was already verified, or in tests.
+func (r *WebhookService) ParseUnsafe(payload []byte) (*ParsedWebhookEvent, error) {
+	res := &ParsedWebhookEvent{}
+	err := res.UnmarshalJSON(payload)
 	if err != nil {
 		return res, err
 	}
