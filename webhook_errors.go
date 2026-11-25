@@ -6,7 +6,9 @@ import "github.com/scalar/galaxy-go/internal/webhooks"
 
 // The reasons the webhook helpers refuse a delivery. Every refused delivery
 // matches exactly one of them with [errors.Is]; a missing or undecodable
-// signing secret matches none.
+// signing secret matches none. A refused delivery also matches the Standard
+// Webhooks Go library's sentinel of the same name, so errors.Is checks
+// written against that library keep working.
 var (
 	// ErrRequiredHeaders reports that a delivery lacked the id, timestamp or signature header.
 	ErrRequiredHeaders = webhooks.ErrRequiredHeaders
